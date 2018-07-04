@@ -1,0 +1,264 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.p-1{
+  padding: 10px;
+}
+
+.my-1{
+  margin-top: 10px!important;
+  margin-bottom: 10px!important;
+}
+
+.ml-1{
+  margin-left: 10px!important;
+}
+
+.pt-1{
+  padding-top: 10px!important;
+}
+
+.right{
+  float: right!important;
+}
+
+
+.submit-data{
+  margin-left: 50px;
+}
+
+/* .MuiPaper-root-9{
+  background-color: #004d40!important;
+} */
+
+/* .MuiAppBar-colorSecondary-8{
+  background-color: #004d40!important;
+} */
+.MuiInputLabel-shrink-237{
+  width:200px!important;
+}
+
+.MuiFormLabel-focused-106{
+  color:#48a999!important;
+}
+
+.MuiStepContent-root-127{
+  padding-left: 50px!important;
+}
+.MuiStepper-root-96{
+  padding-right:2px!important;
+  padding-left:50px!important;
+}
+/* .MuiInput-underline-104:after {
+
+    border-bottom: #48a999!important;
+} */
+
+* {box-sizing: border-box;}
+.wrapper {
+  margin: 0 auto;
+}
+
+.wrapper > div {
+  /* border: 2px solid rgb(233,171,88); */
+  border-radius: 5px;
+  /* background-color: #39796b; */
+/*   padding: 1em; */
+  color: #d9480f;
+}.wrapper {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-gap: 0px;
+  grid-auto-rows: minmax(30px, auto);
+}
+.header {
+  grid-column: 1/12;
+  grid-row: 1;
+}
+.body {
+  grid-column: 2 / 11;
+  grid-row: 2 / 25;
+  background-color: #39796b;
+}
+.side-nav {
+  grid-column: 1;
+  grid-row: 1 / 5;
+}
+.table {
+  position: relative;
+  grid-column: 2 / 11;
+  grid-row: 2;
+  background-color: rgba(232,245,233, .35); }
+
+
+.header-wrapper {
+  margin: 0 auto;
+}
+
+.header-wrapper > div {
+  border: 2px solid rgb(233,171,88);
+  border-radius: 5px;
+  background-color: rgba(233,171,200,.5);
+/*   padding: 1em; */
+  color: #d9480f;
+}.header-wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 0px;
+  grid-auto-rows: minmax(5px, auto);
+}
+.brand {
+  grid-column: 1;
+  grid-row: 2/5;
+  height: 40px;
+}
+
+.logout {
+  grid-column: 12;
+  grid-row: 1;
+/*   margin: auto; */
+}
+
+.nav-center {
+  grid-column: 3/11;
+  grid-row: 5;
+/*   margin: auto */
+}
+
+
+.flex {
+  flex: 1;
+}
+.menuButton {
+  margin-left: -12;
+  margin-right: 20;
+}
+
+.header-logo{
+  margin-right: 10px;
+}
+
+.root {
+    display: inline-block;
+}
+
+.card {
+  max-width: 345px;
+}
+.media {
+  height: 0;
+  padding-top: '56.25%';
+}
+
+.textField {
+  width: 92%;
+  margin: 2%!important;
+}
+.textField-medium{
+  width: 60%;
+  margin: 2%!important;
+}
+.textField-short{
+  width: 40%;
+  margin: 2%!important;
+}
+.textField-short-helper{
+  width: 40%;
+  margin: 0px 2% 2% 2%!important;
+  /* padding-top: -30px!important; */
+}
+.textField-tiny{
+  width: 28%;
+  margin: 2%!important;
+}
+input:focus {
+      background-color: rgba(232,245,233, .35)
+    }
+
+.MuiFormLabel-root-105:focus{
+  width: 100%;
+
+}
+
+.textField:hover {
+  border-radius: 5px;
+  background-color: rgba(232,245,233, .35)
+}
+
+.start-now{
+  margin:auto!important;
+  width:100%!important;
+}
+.start-now:hover{
+  background-color: rgba(232,245,233)!important;
+}
+
+.ReactTable{
+  height: 400px!important;
+}
+
+/* .shrink{
+  position: absolute!important;
+  top:0;
+  margin-left: -250px!important;
+-webkit-transform:scale(0.5);
+-moz-transform:scale(0.5);
+-ms-transform:scale(0.5);
+transform:scale(0.5);
+} */
+
+/* .calc-section{
+  display: inline-block;
+  width: 350px;
+  margin: 10px;
+} */
+
+.card-banner{
+  width: 100%;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.center{
+  margin: auto!important;
+}
+
+.card-header{
+  background-color: #00251a;
+  color: white;
+}
+@media only screen and  (max-width:480px) {
+  .MuiStepContent-root-127{
+    padding-left: 15px!important;
+  }
+  .MuiStepper-root-96{
+    padding-right:5px!important;
+    padding-left:10px!important;
+  }
+  .textField {
+    width: 90%;
+    margin: 5%!important;
+  }
+  .textField-medium{
+    width: 90%;
+    margin: 5%!important;
+  }
+  .textField-short{
+    width: 90%;
+    margin: 5%!important;
+  }
+  .textField-short-helper{
+    width: 90%;
+    margin: 0px 5% 5% 5%!important;
+    /* padding-top: -30px!important; */
+  }
+  .textField-tiny{
+    width: 90%;
+    margin: 5%!important;
+  }
+}
