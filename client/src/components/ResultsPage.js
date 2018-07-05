@@ -52,7 +52,7 @@ class ResultsPage extends Component {
     });
 
     let onlyY = Object.keys(results).map(function(key) {
-      return results[key].adjustedNeed
+      return results[key].yearStart
     });
     console.log(onlyY)
 
