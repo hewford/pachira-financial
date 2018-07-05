@@ -9,6 +9,8 @@ import LineChart from 'react-d3-components/lib/LineChart';
 import d3 from 'd3/dist/d3';
 import scaleBand from 'd3/dist/d3';
 
+import TestGraph from './TestGraph'
+
 
 
 class ResultsPage extends Component {
@@ -17,24 +19,10 @@ class ResultsPage extends Component {
     this.props.fetchResults()
   }
 
-  // componentDidMount(){
-  //
-  //       var rectWidth = 100;
-  //       var height = 300;
-  //       var data = [100, 250, 175, 200, 300];
-  //
-  //       var rect = d3.selectAll('rect')
-  //       	.data(data)
-  //       	.attr('x', (d, i) => i * rectWidth)
-  //       	.attr('y', d => height - d)
-  //       	.attr('width', d=> d)
-  //       	.attr('height', d => d)
-  //       	.attr('fill', 'blue')
-  //       	.attr('stroke', '#fff')
-  //
-  //
-  //       console.log(rect)
-  // }
+  componentDidMount(){
+
+
+  }
 
   renderTestBarChart = (results) => {
 
@@ -47,19 +35,18 @@ class ResultsPage extends Component {
     let values2 = Object.keys(results).map(function(key) {
       return {
         x: results[key].age,
-        y: results[key].adjustedNeed
+        y: results[key].incomeInflation
       };
     });
 
+    console.log(values1)
+    // debugger;
     let onlyY = Object.keys(results).map(function(key) {
       return results[key].yearStart
     });
     console.log(onlyY)
 
-    let data = [{
-      label: 'age',
-      values: values1
-    },
+    let data = [
     {
       label: 'need',
       values: values2
@@ -183,11 +170,12 @@ class ResultsPage extends Component {
           </Grid>
           <Grid item xs={12} sm={12} lg={12} xl={6}>
           <svg>
-  <rect />
-  <rect />
-  <rect />
-  <rect />
-</svg>
+            <rect />
+            <rect />
+            <rect />
+            <rect />
+          </svg>
+          <TestGraph/>
           </Grid>
         </Grid>
       )
