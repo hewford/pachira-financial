@@ -10,6 +10,7 @@ import * as d3 from "d3";
 import scaleBand from 'd3/dist/d3';
 
 import TestGraph from './TestGraph'
+import IncomeNeedsGraph from './IncomeNeedsGraph'
 
 
 class ResultsPage extends Component {
@@ -158,6 +159,12 @@ class ResultsPage extends Component {
 
           <Grid item xs={12} sm={9} lg={6} xl={6}>
             {this.renderTable(results)}
+          </Grid>
+
+          <Grid className="graph-container" item xs={12} sm={12} lg={6} xl={6}>
+          
+              <IncomeNeedsGraph results={results}/>
+
           </Grid>
 
 

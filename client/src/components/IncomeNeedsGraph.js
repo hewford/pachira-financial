@@ -5,6 +5,15 @@ class IncomeNeedsGraph extends Component {
 
   componentDidMount() {
 
+
+
+
+  }
+
+
+
+  render() {
+
     const results  = this.props.results
     console.log(results)
     let data1 = Object.keys(results).map(function(key) {
@@ -17,17 +26,11 @@ class IncomeNeedsGraph extends Component {
     let data2 = data1.slice(0, 35)
 
 
-  }
-
-
-
-  render() {
-
-
     return (
-      <div>
-
-      </div>
+      <LineGraph
+        data1={data1}
+        data2={data2}
+        targetSvg='income-needs-graph1'/>
     );
   }
 
