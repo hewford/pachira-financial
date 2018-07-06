@@ -2,23 +2,20 @@ import React, {Component} from 'react';
 
 import * as d3 from "d3";
 
-//
-// var width = 960;
-// var height = 500;
-var force = d3.forceSimulation()
+// var force = d3.forceSimulation()
 
 
 class TestGraph extends Component {
 
 
-  componentWillMount() {
-    console.log(d3.forceSimulation())
-    force.on('tick', () => {
-      // after force calculation starts, call
-      // forceUpdate on the React component on each tick
-      this.forceUpdate()
-    });
-  }
+  // componentWillMount() {
+  //   console.log(d3.forceSimulation())
+  //   force.on('tick', () => {
+  //     // after force calculation starts, call
+  //     // forceUpdate on the React component on each tick
+  //     this.forceUpdate()
+  //   });
+  // }
 
   shouldComponentUpdate (nextProps, nextState) {
     // debugger;
