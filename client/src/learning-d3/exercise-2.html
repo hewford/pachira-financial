@@ -1,0 +1,72 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<style type="text/css">
+  /*css to go here*/
+  svg {
+    width: 800px;
+    height: 600px;
+  }
+  circle {
+    opacity: 0.5;
+  }
+</style>
+
+<body></body>
+
+<script>
+  // properties
+  var radius = 10;
+  var duration = 1500;
+  var width = 800;
+  var height = 600;
+  var svg = d3.select('body').append('svg');
+  // scales
+  var xScale = d3.scaleBand()
+    .rangeRound([0, width]);
+  var yScale = d3.scaleLinear()
+    .range([height, 0]);
+  var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+  function update(data, year) {
+    var filteredData = data.filter(function(d) {
+      return d.year === year;
+    });
+    var circles = svg.selectAll('circle')
+      .data(filteredData, function(d) {return d.key});
+    var exit = circles.exit()
+      .transition().duration(duration)
+      .attr('r', 0)
+      .remove();
+    var enter = circles.enter().append('circle')
+      .attr('cx', function(d) {return xScale(d.site)})
+      .attr('cy', function(d) {return yScale(d.yield)});
+    circles = enter.merge(circles)
+      .attr('fill', function(d) {return colorScale(d.gen)})
+      .transition().duration(duration)
+      .attr('cx', function(d) {return xScale(d.site)})
+      .attr('cy', function(d) {return yScale(d.yield)})
+      .attr('r', radius);
+  }
+  d3.csv('exercise-2.csv', function(err, response) {
+    response.forEach(function(d) {
+      // convert yield and year from string to int
+      d.year = +d.year;
+      d.yield = +d.yield;
+      // use gen and site as the unique key for each datum
+      d.key = d.site + ':' + d.gen;
+    });
+    // set domain on the scales
+    var xDomain = response.map(function(d) {return d.site});
+    xScale.domain(xDomain);
+    var yDomain = d3.extent(response, function(d) {return d.yield});
+    yScale.domain(yDomain);
+
+    var startYear = 1927;
+    var numYears = 9;
+    var index = 0;
+    setInterval(() => {
+      update(response, startYear + (index % numYears));
+      index += 1;
+    }, 1000)
+  });
+</script>

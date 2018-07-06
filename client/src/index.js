@@ -9,6 +9,7 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers/index'
 import { BrowserRouter } from 'react-router-dom';
 import 'react-table/react-table.css'
+import "c3/c3.css"
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 

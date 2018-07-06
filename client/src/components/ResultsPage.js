@@ -6,10 +6,15 @@ import { fetchResults } from '../actions'
 import ReactTable from 'react-table';
 import Grid from '@material-ui/core/Grid';
 import LineChart from 'react-d3-components/lib/LineChart';
-import d3 from 'd3/dist/d3';
+import * as d3 from "d3";
+import c3 from 'c3'
 import scaleBand from 'd3/dist/d3';
 
 import TestGraph from './TestGraph'
+
+
+
+
 
 
 
@@ -19,10 +24,31 @@ class ResultsPage extends Component {
     this.props.fetchResults()
   }
 
-  componentDidMount(){
-
-
-  }
+//   componentDidMount(){
+//
+//     var chart = c3.generate({
+//     bindto: '#chart',
+//     data: {
+//       columns: [
+//         ['data1', 30, 200, 100, 400, 150, 250],
+//         ['data2', 50, 20, 10, 40, 15, 25]
+//       ],
+//       axes: {
+//         data2: 'y2' // ADD
+//       }
+//     },
+//     width: '100px',
+//     height: '100px',
+//
+//     axis: {
+//       y2: {
+//         show: true // ADD
+//       }
+//     }
+// });
+// console.log(chart)
+//
+//   }
 
   renderTestBarChart = (results) => {
 
@@ -39,12 +65,12 @@ class ResultsPage extends Component {
       };
     });
 
-    console.log(values1)
+    // console.log(values1)
     // debugger;
     let onlyY = Object.keys(results).map(function(key) {
       return results[key].yearStart
     });
-    console.log(onlyY)
+    // console.log(onlyY)
 
     let data = [
     {
@@ -160,33 +186,37 @@ class ResultsPage extends Component {
 
     if (results) {
       return (
-        <Grid className="" container spacing={0} style={{padding: 1}}>
+        <Grid className="" container spacing={0} style={{padding: 20}}>
 
           <Grid item xs={12} sm={9} lg={6} xl={6}>
             {this.renderTable(results)}
           </Grid>
-          <Grid item xs={12} sm={12} lg={12} xl={6}>
-            {this.renderTestBarChart(results)}
+
+
+          <Grid className="graph-container" item xs={12} sm={12} lg={6} xl={6}>
+
+              <svg className="test-svg">
+                <a/>
+              </svg>
+              <TestGraph results={results}/>
+
           </Grid>
-          <Grid item xs={12} sm={12} lg={12} xl={6}>
-          <svg>
-            <rect />
-            <rect />
-            <rect />
-            <rect />
-          </svg>
-          <TestGraph/>
+
+          <Grid className="graph-container" item xs={12} sm={12} lg={6} xl={6}>
+
+              <svg className="faux">
+                <a/>
+              </svg>
+
+
           </Grid>
+
         </Grid>
       )
     } else {
       return(
         <svg>
-    <rect />
-    <rect />
-    <rect />
-    <rect />
-  </svg>
+        </svg>
       );
 
     }

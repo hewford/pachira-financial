@@ -13,7 +13,7 @@ import { fetchUser } from '../actions'
 class Header extends Component {
 
   componentDidMount() {
-    this.props.fetchUser();
+    // this.props.fetchUser();
   }
 
   render() {

@@ -10,6 +10,7 @@
     "react": "^16.4.1",
     "react-d3-components": "^0.9.1",
     "react-dom": "^16.4.1",
+    "react-faux-dom": "^4.2.0",
     "react-mdc-web": "^0.17.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
