@@ -7,15 +7,9 @@ import ReactTable from 'react-table';
 import Grid from '@material-ui/core/Grid';
 import LineChart from 'react-d3-components/lib/LineChart';
 import * as d3 from "d3";
-import c3 from 'c3'
 import scaleBand from 'd3/dist/d3';
 
 import TestGraph from './TestGraph'
-
-
-
-
-
 
 
 class ResultsPage extends Component {
@@ -23,32 +17,6 @@ class ResultsPage extends Component {
   componentWillMount(){
     this.props.fetchResults()
   }
-
-//   componentDidMount(){
-//
-//     var chart = c3.generate({
-//     bindto: '#chart',
-//     data: {
-//       columns: [
-//         ['data1', 30, 200, 100, 400, 150, 250],
-//         ['data2', 50, 20, 10, 40, 15, 25]
-//       ],
-//       axes: {
-//         data2: 'y2' // ADD
-//       }
-//     },
-//     width: '100px',
-//     height: '100px',
-//
-//     axis: {
-//       y2: {
-//         show: true // ADD
-//       }
-//     }
-// });
-// console.log(chart)
-//
-//   }
 
   renderTestBarChart = (results) => {
 
