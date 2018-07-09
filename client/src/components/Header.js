@@ -13,7 +13,7 @@ import { fetchUser } from '../actions'
 class Header extends Component {
 
   componentDidMount() {
-    // this.props.fetchUser();
+    this.props.fetchUser();
   }
 
   render() {
@@ -21,7 +21,7 @@ class Header extends Component {
 
     return (
       <div>
-        <AppBar color="secondary" position="static">
+        <AppBar position="sticky" color="secondary">
           <Toolbar>
             <Link to="/">
               <img alt="logo" className="header-logo" src={logo} width="50px"/>

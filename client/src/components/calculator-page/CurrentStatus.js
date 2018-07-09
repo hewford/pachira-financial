@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setCurrentStatus } from '../actions'
+import { setCurrentStatus } from '../../actions'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
+import Snacker from '../commons/Snacker'
+
 
 class CurrentStatus extends Component {
 
@@ -19,7 +21,7 @@ class CurrentStatus extends Component {
     this.state={
       savings: 0,
       contributions: 0,
-      contributionsStop: 65,
+      increaseContributions: 0
     }
   }
 
@@ -37,6 +39,8 @@ class CurrentStatus extends Component {
 
   render(){
 
+    const snackerMessage = 'It is often recommended to increase contributions each year at a growth rate reflecting raises you recieve each year.'
+
     return (
       <div>
 
@@ -47,9 +51,12 @@ class CurrentStatus extends Component {
 
           <Paper className="">
             <Toolbar className="card-header">
-              <Typography variant="title" color="inherit">
+              <Typography className='flex' variant="title" color="inherit">
                 Current Status
               </Typography>
+
+              <Snacker message={snackerMessage}/>
+
             </Toolbar>
 
             <TextField
@@ -88,16 +95,19 @@ class CurrentStatus extends Component {
             />
 
             <TextField
-              value={this.state.contributionsStop}
+              value={this.state.increaseContributions}
               color="secondary"
               id="textarea"
-              label="Age to Stop Contributions"
+              label="Increase By:"
               className='textField-tiny'
               margin="normal"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">%</InputAdornment>,
+              }}
               onChange={(e)=>{
                 e.preventDefault()
                 let value = e.target.value.replace(/[^0-9]+/g, '');
-                this.setState({contributionsStop: Number(value)
+                this.setState({increaseContributions: Number(value)
                 })
               }}
             />

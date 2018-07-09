@@ -44,7 +44,7 @@ getStepContent(step) {
     case 3:
       return <PensionEntries handleNext={this.handleNext} handleBack={this.handleBack}/>
     case 4:
-      return <RentalEntries handleNext={this.handleNext} handleBack={this.handleBack}/>
+      return <RentalEntries submitData={this.submitData} handleBack={this.handleBack}/>
     default:
       return 'Unknown step';
   }
@@ -69,10 +69,11 @@ getStepContent(step) {
   };
 
   submitData = () => {
-
+    this.props.history.push('/results')
   }
 
   render(){
+    console.log(this.props)
     const steps = this.getSteps();
     const { activeStep } = this.state;
 
@@ -80,9 +81,16 @@ getStepContent(step) {
       <div>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => {
+          console.log(label)
           return (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel
+                onClick={(e)=>{
+                  e.preventDefault()
+                  if (this.state.activeStep>0) {
+                    this.setState({activeStep:index})
+                  }
+                }}>{label}</StepLabel>
               <StepContent>
                 {this.getStepContent(index)}
               </StepContent>

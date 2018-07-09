@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setPensions } from '../actions'
+import { setPensions } from '../../actions'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+
+import Snacker from '../commons/Snacker'
 
 class PensionEntries extends Component {
 
@@ -83,6 +85,8 @@ class PensionEntries extends Component {
 
   render(){
 
+    const snackerMessage = 'COLA is the cost of living adjustment in which a pensions payout increases each year after you start collecting'
+
     let pensionEntries = [];
 
     for (let i=1; i<this.state.pensionEntries+1; i++) {
@@ -92,7 +96,7 @@ class PensionEntries extends Component {
         <Grid key={i} item xs={12} sm={9} lg={6} xl={6}>
         <Paper className="">
         <Toolbar className="card-header">
-          <Typography variant="title" color="inherit" className='flex'>
+          <Typography className='flex' variant="title" color="inherit">
             Pension #{i}
           </Typography>
           {this.state.pensionEntries>1 && i===this.state.pensionEntries ?
@@ -105,6 +109,8 @@ class PensionEntries extends Component {
                 Remove
                 </Button>
            : <div/> }
+
+           <Snacker message={snackerMessage}/>
 
         </Toolbar>
           <TextField
@@ -168,7 +174,6 @@ class PensionEntries extends Component {
           {i===this.state.pensionEntries ? this.renderNewEntryButton() : ''}
           </Paper>
 
-
         </Grid>
 
       )
@@ -194,7 +199,7 @@ class PensionEntries extends Component {
       </div>
     )
     return(
-      <Grid className="" container spacing={0} style={{padding: 1}}>
+      <Grid className="next-line" container spacing={0} style={{padding: 1}}>
       {pensionEntries}
       </Grid>
     )

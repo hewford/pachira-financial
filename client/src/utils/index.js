@@ -29,29 +29,33 @@ const calcIncomeNeeds = (state) => {
   return incomeNeedsArray
 }
 /*========== calcContributions ==========*/
-const calcContributions = (data, state) => {
-  const { currentAge, lifeExpectancy } = state.assumptions
-  const { contributionsStop, yearlyContributions } = state.currentStatus
+const calcContributions = (dataArg, state, contributions) => {
+  const { currentAge, lifeExpectancy, retirementAge } = state.assumptions
+  const { increaseContributions } = state.currentStatus
+
+  let yearlyContributions = contributions * 12
 
   for (let age = currentAge; age <= lifeExpectancy; age++) {
     // find index in the state data object
-    const index = data[age]
+    const index = dataArg[age]
 
-    if (age <= contributionsStop){
+    if (age < retirementAge){
       // store contribution within that index
       index.yearlyContributions = yearlyContributions
+
+      yearlyContributions = yearlyContributions * (1+(increaseContributions/100))
     } else {
       index.yearlyContributions = 0
     }
 
   }
 
-  return data
+  return dataArg
 }
 
 
 /*========== calcWorkingYears ==========*/
-const calcWorkingYears = (data, state) => {
+const calcWorkingYears = (data, state, calculatingContributions) => {
 
   const { currentAge, retirementAge } = state.assumptions
   const { savings } = state.currentStatus
@@ -68,33 +72,45 @@ const calcWorkingYears = (data, state) => {
     // find index in the state data object
     const index = data[age]
 
+    // NOTICE: divide index.yearlyContributions by 12 to switch back to monthly intervals
     //define contributions for that index
-    const contributions = index.yearlyContributions/12
+    let contributions = index.yearlyContributions
+
+    if (calculatingContributions) {
+      contributions = calculatingContributions
+    }
 
     // store year start within that index
     index.yearStart = yearStart
 
+    // NOTICE: divide the rate by 12 to switch back to monthly intervals
     // define rate of return based on how time horizon
     if ((retirementAge - age) > 10){
       interest = growthStep1
-      rate = 1 + (growthStep1/100)/12
+      rate = 1 + (growthStep1/100)
     } else {
       interest = growthStep2
-      rate = 1 + (growthStep2/100)/12
+      rate = 1 + (growthStep2/100)
     }
     //store interest
     index.interest = interest
 
-    // calculate yearEnd from 12 intervals of monthly contributions
+    /* NOTICE: below code is commented out because I am compounding at annual intervals instead of monthly now. Might switch back eventually
+
+    calculate yearEnd from 12 intervals of monthly contributions
     for (let n=0; n<12; n++) {
       yearEnd = (yearStart+contributions)*rate
       yearStart = yearEnd
-    }
+    }*/
+
+    yearEnd = (yearStart+contributions)*rate
+    yearStart = yearEnd
 
     //store yearEnd
     index.yearEnd = yearEnd
+    // NOTICE: multiply contributions by 12 to switch back to monthly intervals
     //store growth
-    index.growth = yearEnd - index.yearStart - (index.yearlyContributions)
+    index.growth = yearEnd - index.yearStart - (contributions)
   }
 
   data[retirementAge].yearStart = data[retirementAge-1].yearEnd
@@ -195,37 +211,38 @@ const calcRentalIncomePerYear = (data, state) => {
 }
 
 /*========== calcNeedMinusRentalIncome ==========*/
-const calcNeedMinusRentalIncome = (data, state) => {
-  // find adjusted need using each pension income, income needed, pension cola, pension start age, lifeExpectancy, and retirementAge
-  const { lifeExpectancy, retirementAge } = state.assumptions
-
-  const rentals = state.rentals
-
-  // loop through each rental entered
-  for (let r = 1; r < rentals.rentalEntries+1; r++) {
-    const rentalName = 'rental'+r
-
-    for (let age = retirementAge; age < lifeExpectancy+1; age++) {
-
-      // define data index that is being manipulated
-      const index = data[age]
-
-      // define adjustedNeed
-      let { adjustedNeed } = index
-
-      // record newly adjusted income
-      index.adjustedNeed = adjustedNeed - index[rentalName]
-      index.adjustedNeed = index.adjustedNeed + index[rentalName+'Expenses']
-
-      // make sure income need cannot be below 0
-      if(index.adjustedNeed<0) {
-        index.adjustedNeed = 0
-      }
-
-    }
-  }
-  return data
-}
+/*   COMING SOON:    */
+// const calcNeedMinusRentalIncome = (data, state) => {
+//   // find adjusted need using each pension income, income needed, pension cola, pension start age, lifeExpectancy, and retirementAge
+//   const { lifeExpectancy, retirementAge } = state.assumptions
+//
+//   const rentals = state.rentals
+//
+//   // loop through each rental entered
+//   for (let r = 1; r < rentals.rentalEntries+1; r++) {
+//     const rentalName = 'rental'+r
+//
+//     for (let age = retirementAge; age < lifeExpectancy+1; age++) {
+//
+//       // define data index that is being manipulated
+//       const index = data[age]
+//
+//       // define adjustedNeed
+//       let { adjustedNeed } = index
+//
+//       // record newly adjusted income
+//       index.adjustedNeed = adjustedNeed - index[rentalName]
+//       index.adjustedNeed = index.adjustedNeed + index[rentalName+'Expenses']
+//
+//       // make sure income need cannot be below 0
+//       if(index.adjustedNeed<0) {
+//         index.adjustedNeed = 0
+//       }
+//
+//     }
+//   }
+//   return data
+// }
 
 /*========== calcRetirementYears ==========*/
 const calcRetirementYears = (data, state) => {
@@ -297,8 +314,82 @@ const formatDecimals = (data, state) => {
   return data
 }
 
+/*==========-------------------==========*/
+/*========== calRetirementGoal ==========*/
+/*==========-------------------==========*/
+export const calRetirementGoal = (data, state) => {
+
+  const { lifeExpectancy, retirementAge } = state.assumptions
+
+  //initialize need outside of loop scope
+  let neededYearStart = 0
+
+  // work backwards to find needed balance at 65
+  for (let age = lifeExpectancy; age >= retirementAge; age--) {
+
+    // find index in the state data object
+    const index = data[age]
+
+    // initialize needed variables for calculation
+    const { adjustedNeed, yearlyContributions } = index
+
+    // work backwords to find needed yearStart each year
+    neededYearStart = neededYearStart / (1+(index.interest/100))
+    neededYearStart += adjustedNeed
+    neededYearStart -= yearlyContributions
+  }
+
+  neededYearStart = Math.round(neededYearStart)
+
+  return neededYearStart
+}
+
+export const calcNeededInitialContribution = (retirementGoal, state) => {
+
+  const { currentAge, retirementAge } = state.assumptions
+
+  const r = state.currentStatus.increaseContributions/100
+  const g1 = state.growthAssumptions.growthStep1/100
+  const g2 = state.growthAssumptions.growthStep2/100
+  const savings = state.currentStatus.savings
+  const n = retirementAge - currentAge
+
+  // variables in formulas below may not directly related to the above constants
+  //
+  // formula 1:          _                    _
+  //                   |       (r - g2)       |
+  //        PMT =  FV *|  –––––––––––––––––   |
+  //                   |_ (1+r)^n - (1*g2)^n  _|
+  //
+  // FV is the retirementGoal. Had to solve it in multiple parts since the growth rate of the investment changes dependning on how close to retirement the user is.
+  //
+  // formula 2:
+  //        FV = PV(1+r)^n  || FV = PV(1+g1)^n || FV = PV(1+g2)^n
+  //
+  // defined variables below so I wouldn't have to write the same formula over and over again.
+
+  const b = ((r-g2)/(Math.pow((1+r), 10) - Math.pow((1+g2), 10)))
+  const c = ((r-g1)/(Math.pow((1+r), n-10) - Math.pow((1+g1), n-10)))
+  const d = Math.pow((1+r), (n-10))
+  const e = Math.pow((1+g2), 10)
+  const f = Math.pow((1+g1), n-10)
+
+  const savings10 = savings * f
+  const savingsFinal = savings10 * e
+
+  const a = retirementGoal - savingsFinal
+
+
+  const PMT = ((a * b * c)/( (c* d) + (b * e)))/12
+
+  // formula used assumes contributions at the end of the year. So it asks for more money than actually needed. I just lower the amount by 10%. It's still a little more than needed, but I guess it's better than under-contributing.
+  // I can solve this by adding the first PMT to initial savings, but that would require me to build the formula again, which I can do later.
+  return ( PMT * .95 )
+
+}
+
 /*========== calculateFinancials ==========*/
-export const calculateFinancials = (state) => {
+export const calculateFinancials = (state, contributions) => {
   // build array where each element represents one year in user's lifetime
   let data = calcIncomeNeeds(state)
 
@@ -306,7 +397,7 @@ export const calculateFinancials = (state) => {
   data = _.mapKeys(data, "age")
 
   // store contributions made each year
-  data = calcContributions(data, state)
+  data = calcContributions(data, state, contributions)
 
   // calculate year start, year end, interest rate, and growth during working years
   data = calcWorkingYears(data, state)
@@ -316,13 +407,9 @@ export const calculateFinancials = (state) => {
 
   data = calcRentalIncomePerYear(data, state)
 
-  let data2 = calcNeedMinusRentalIncome(data, state)
-
   data = calcRetirementYears(data, state)
-
-  data2 = calcRetirementYears(data2, state)
 
   data = formatDecimals(data, state)
 
-  return { data: data, data2: data2 }
+  return data
 }

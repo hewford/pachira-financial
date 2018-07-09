@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import Typography from '@material-ui/core/Typography';
-// import Toolbar from '@material-ui/core/Toolbar';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import Grid from '@material-ui/core/Grid';
 
-// import loader from '../loading-gif.gif';
 import calcImg from '../../src/calc-banner2.jpg';
+import resultsImg from '../../src/graphs-banner2.jpg';
+
+
 
 class Dashboard extends Component {
     constructor(props) {
@@ -25,36 +26,26 @@ class Dashboard extends Component {
     render(){
 
       return (
-        <div className="text-center">
+        <div className="">
 
-          <Grid className="" container spacing={24} style={{padding: 24}}>
-            <Grid item xs={12} sm={6} lg={4} xl={3}>
+          <Grid className="" container spacing={0} style={{padding: 30}}>
+
+            <Grid className="center" item xs={12} sm={8} lg={5} xl={5}>
               <Card color="secondary" className='card'>
 
-                <img alt="cardbanner" className="card-banner" src={calcImg}/>
+                <CardMedia>
+                  <img alt="cardbanner" className="card-banner" src={calcImg}/>
+                </CardMedia>
+
+                <CardContent>
+                  <Typography className='card-description' variant="subheading" color="inherit">
+                     Calculate you're current financial plan against you're desired income in retirement.
+                  </Typography>
+                </CardContent>
 
                 <CardActions>
-                  <Button className="start-now" size="small" color="primary"
+                  <Button variant="contained" className="start-now" color="primary"
                     onClick={()=>{
-                      console.log(this.props)
-                      this.props.history.push('/calculator')
-                    }}>
-                    Start Now
-                  </Button>
-                </CardActions>
-
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4} xl={3}>
-
-              <Card color="secondary" className='card'>
-
-                <img alt="cardbanner" className="card-banner" src={calcImg}/>
-
-                <CardActions>
-                  <Button className="start-now" size="small" color="primary"
-                    onClick={()=>{
-                      console.log(this.props)
                       this.props.history.push('/calculator')
                     }}>
                     Start Now
@@ -64,61 +55,31 @@ class Dashboard extends Component {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} lg={4} xl={3}>
+            <Grid className="center" item xs={12} sm={8} lg={5} xl={5}>
               <Card color="secondary" className='card'>
 
-                <img alt="cardbanner" className="card-banner" src={calcImg}/>
+                <CardMedia>
+                  <img alt="cardbanner" className="card-banner" src={resultsImg}/>
+                </CardMedia>
+
+                <CardContent>
+                  <Typography className='card-description' variant="subheading" color="inherit">
+                     View your calculated results from your saved retirement information.
+                  </Typography>
+                </CardContent>
 
                 <CardActions>
-                  <Button className="start-now" size="small" color="primary"
+                  <Button variant="contained" className="start-now" color="primary"
                     onClick={()=>{
-                      console.log(this.props)
-                      this.props.history.push('/calculator')
+                      this.props.history.push('/results')
                     }}>
-                    Start Now
+                    View My Results
                   </Button>
                 </CardActions>
 
               </Card>
             </Grid>
 
-
-            <Grid item xs={12} sm={6} lg={4} xl={3}>
-              <Card color="secondary" className='card'>
-
-                <img alt="cardbanner" className="card-banner" src={calcImg}/>
-
-                <CardActions>
-                  <Button className="start-now" size="small" color="primary"
-                    onClick={()=>{
-                      console.log(this.props)
-                      this.props.history.push('/calculator')
-                    }}>
-                    Start Now
-                  </Button>
-                </CardActions>
-
-              </Card>
-            </Grid>
-
-
-            <Grid item xs={12} sm={6} lg={4} xl={3}>
-              <Card color="secondary" className='card'>
-
-                <img alt="cardbanner" className="card-banner" src={calcImg}/>
-
-                <CardActions>
-                  <Button className="start-now" size="small" color="primary"
-                    onClick={()=>{
-                      console.log(this.props)
-                      this.props.history.push('/calculator')
-                    }}>
-                    Start Now
-                  </Button>
-                </CardActions>
-
-              </Card>
-            </Grid>
           </Grid>
 
         </div>

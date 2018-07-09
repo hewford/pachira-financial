@@ -8,9 +8,32 @@ body {
   padding: 10px;
 }
 
+.pl-2{
+  padding-left: 20px;
+}
+
+.px-2{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.py-2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.small-padding{
+  padding:5px!important;
+}
+
 .my-1{
   margin-top: 10px!important;
   margin-bottom: 10px!important;
+}
+
+.my-5{
+  margin-top: 50px!important;
+  margin-bottom: 50px!important;
 }
 
 .ml-1{
@@ -20,23 +43,60 @@ body {
 .pt-1{
   padding-top: 10px!important;
 }
+.pt-2{
+  padding-top: 20px!important;
+}
 
 .right{
   float: right!important;
 }
 
+.next-line{
+  display: block!important;
+}
+
+.gray-axis {
+   fill: none;
+   stroke: #bbb;
+   stroke-opacity: .75;
+   shape-rendering: crispEdges;
+ }
 
 .submit-data{
   margin-left: 50px;
 }
 
-/* .MuiPaper-root-9{
-  background-color: #004d40!important;
-} */
+text < .tip {
+  line-height: 1;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.8)!important;
+  color: #fff!important;
+  border-radius: 4px!important;
+  font-size: 12px;
+  font-family: Lato;
+}
 
-/* .MuiAppBar-colorSecondary-8{
-  background-color: #004d40!important;
-} */
+/* Creates a small triangle extender for the tooltip */
+.tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips specifically */
+.tip.n:after {
+  margin: -2px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
 .MuiInputLabel-shrink-237{
   width:200px!important;
 }
@@ -86,6 +146,27 @@ body {
 .side-nav {
   grid-column: 1;
   grid-row: 1 / 5;
+}
+.loading-screen {
+  height:200px;
+  grid-column: 1/12;
+  grid-row: 1 / 5;
+  text-align: center;
+}
+.loading-back{
+  grid-column: 1/12;
+  grid-row: 5;
+  text-align: center;
+}
+.loading-back-button {
+  margin:auto;
+  width:200px;
+  height:40px;
+  color:white;
+}
+.loading {
+  background-color: rgba(232,245,233, 1);
+  padding-bottom: 250px;
 }
 .table {
   position: relative;
@@ -142,12 +223,15 @@ body {
 }
 
 .root {
-    display: inline-block;
+  display: inline-block;
 }
 
-.card {
-  max-width: 345px;
+.row {
+  display: inline-flex!important;
+  margin: auto;
 }
+
+
 .media {
   height: 0;
   padding-top: '56.25%';
@@ -188,14 +272,6 @@ input:focus {
   background-color: rgba(232,245,233, .35)
 }
 
-.start-now{
-  margin:auto!important;
-  width:100%!important;
-}
-.start-now:hover{
-  background-color: rgba(232,245,233)!important;
-}
-
 .ReactTable{
   height: 400px!important;
 }
@@ -216,8 +292,10 @@ transform:scale(0.5);
   margin: 10px;
 } */
 
-.card-banner{
-  width: 100%;
+
+
+.text-white {
+  color: white!important
 }
 
 .text-center{
@@ -225,13 +303,79 @@ transform:scale(0.5);
 }
 
 .center{
-  margin: auto!important;
+  margin-left: auto!important;
+  margin-right: auto!important;
 }
 
 .card-header{
   background-color: #00251a;
   color: white;
 }
+
+.plan-header{
+  background-color: #004c40;
+  color: white!important;
+}
+
+.card-banner{
+  width: 100%;
+}
+
+.card {
+  margin-bottom: 50px;
+  max-width: 100%;
+  background-color: rgba(232,245,233, 1)!important;
+}
+
+.card-description{
+  text-align: center;
+  margin: 0 20px !important;
+}
+
+.start-now{
+  margin: 0 auto 10px auto!important;
+  width:50%!important;
+}
+
+.helper {
+  position: absolute;
+  padding-left: 5px!important;
+  padding-right: 5px!important;
+  /* padding-top: -5px!important;
+  padding-bottom: -5px!important; */
+  right: 0px;
+  bottom:-18px;
+}
+
+.snackbar-description{
+  padding-left: 15px;
+}
+
+.snackbar-text{
+  text-align: center;
+  color: white!important;
+  padding-top: 25px;
+  padding-bottom: calc(100vh * 0.05);
+}
+
+.MuiSnackbarContent-message-285{
+  margin: auto;
+}
+
+.snackbar{
+  color: #fff;
+  display: flex;
+  padding: 6px 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  pointer-events: initial;
+  background-color: #004c40!important;
+  /* border: 1px solid #48a999; */
+  /* border-bottom: none; */
+}
+
+/* secondary: { main: '#004c40' */
+
 @media only screen and  (max-width:480px) {
   .MuiStepContent-root-127{
     padding-left: 15px!important;
@@ -269,6 +413,8 @@ svg {
 }
 .graph-container{
   position: relative;
+  height: 1200px!important;
+  /* padding-right: 10px; */
 } */
 .graph {
   margin:0;
@@ -276,6 +422,42 @@ svg {
   top:0;
   right:0 }
 
+.bar-chart{
+  height:280px;
+}
+
+.gauge-graph{
+  width:100%!important;
+
+}
+
+.gauge-graph-container{
+  position: relative!important;
+  width: 350px!important;
+}
+
 .test-svg{
   width: 100%!important
+}
+
+.gauge-svg{
+  /* position: absolute!important; */
+  /* left: 10px!important; */
+  width: 350px!important;
+  margin-left: calc(50% - 175px);
+  justify-content: center!important;
+}
+
+#success-gauge2{
+  margin:auto!important;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.area {
+  fill: lightsteelblue;
 }

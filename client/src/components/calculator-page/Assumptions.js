@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setAssumptions } from '../actions'
+import { setAssumptions } from '../../actions'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+
+import Snacker from '../commons/Snacker'
 
 
 class Assumptions extends Component {
@@ -38,6 +40,8 @@ class Assumptions extends Component {
 
   render(){
 
+    const snackerMessage = "Desired retirement income is in today's dollars. Therefore, put the income you desire and the calculator will inflate it for you."
+
     return (
 
       <Grid className="" container spacing={0} style={{padding: 1}}>
@@ -45,9 +49,12 @@ class Assumptions extends Component {
         <Grid item xs={12} sm={9} lg={6} xl={6}>
           <Paper className="">
             <Toolbar className="card-header">
-              <Typography variant="title" color="inherit">
+              <Typography className='flex' variant="title" color="inherit">
                 Retirement Assumptions
               </Typography>
+
+              <Snacker message={snackerMessage}/>
+
             </Toolbar>
 
             <TextField

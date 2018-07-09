@@ -2,67 +2,42 @@ import React, {Component} from 'react';
 
 import * as d3 from "d3";
 
-// function responsivefy(svg) {
-// // get container + svg aspect ratio
-// var container = d3.select(svg.node().parentNode),
-//     width = parseInt(svg.style("width")),
-//     height = parseInt(svg.style("height")),
-//     aspect = width / height;
-//
-// // add viewBox and preserveAspectRatio properties,
-// // and call resize so that svg resizes on inital page load
-// svg.attr("viewBox", "0 0 " + width + " " + height)
-//     .attr("perserveAspectRatio", "xMinYMid")
-//     .call(resize);
-//
-// // to register multiple listeners for same event type,
-// // you need to add namespace, i.e., 'click.foo'
-// // necessary if you call invoke this function for multiple svgs
-// // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-// d3.select(window).on("resize." + container.attr("id"), resize);
-//
-// // get width of container and resize svg to fit it
-// function resize() {
-//     var targetWidth = parseInt(container.style("width"));
-//     svg.attr("width", targetWidth);
-//     svg.attr("height", Math.round(targetWidth / aspect));
-// }
-// }
 
 class LineGraph extends Component {
 
-
-  shouldComponentUpdate (nextProps, nextState) {
-    // debugger;
-    // You can access `this.props` and `this.state` here
-    // This function should return a boolean, whether the component should re-render.
-    return false
+  constructor(props) {
+    super(props)
+    this.state={
+      width: window.innerWidth < 600 ?  window.innerWidth - 20: window.innerWidth/2
+    }
   }
 
-  componentDidMount() {
-    const lWidth = window.screen.width
-    let width;
-    lWidth > 900 ? width = lWidth/2 - 100 : width = lWidth
+  renderGraphs(width) {
+
     const height = 300;
-    const margin = {top: 50, bottom: 50, left: 50, right: 50};
+    const margin = {top: 60, bottom: 60, left: 60, right: 60};
+
+
+
+    let dataScale = this.props.dataScale
 
     const data1 = this.props.data1
-    const data2 = this.props.data2
 
-    const xExtent1 = d3.extent(data1, d => Number(d.x) )
-    console.log('xExtent1')
-    console.log(xExtent1)
+    let data2 = this.props.data2
+
+
+
+    if(!dataScale){
+      dataScale = data1
+    }
+
+    const xExtent1 = d3.extent(dataScale, d => Number(d.x) )
 
     const xScale = d3.scaleLinear()
       .domain(xExtent1)
       .range([margin.left, width - margin.right])
 
-    console.log('xScale')
-    console.log(xScale())
-
-    const yMax = d3.max(data1, d => d.y)
-    console.log('yMax')
-    console.log(yMax)
+    const yMax = d3.max(dataScale, d => d.y)
 
     var yScale = d3.scaleLinear()
     	.domain([0, yMax])
@@ -76,13 +51,71 @@ class LineGraph extends Component {
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .attr("id", "visualization");
+        .attr("class", this.props.id)
 
-      var path = svg.append("path")
-        .attr("d", line(data2))
+
+      if(data2){
+
+        if (this.props.fillData2){
+          data2.push({x:data2[data2.length-1].x, y:0})
+          data2.push({x:data2[0].x, y:0})
+
+          svg.append("path")
+            .attr("d", line(data2))
+            .attr("stroke", "red")
+            .attr("stroke-width", "1")
+            .attr("fill", "darkOrange")
+
+        } else {
+          svg.append("path")
+            .attr("d", line(data2))
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", "1")
+            .attr("fill", "none")
+        }
+
+
+      }
+
+      svg.append("path")
+        .attr("d", line(data1))
         .attr("stroke", "steelblue")
-        .attr("stroke-width", "2")
-        .attr("fill", "none");
+        .attr("stroke-width", "3")
+        .attr("fill", "none")
+
+
+      svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", (margin.top-10))
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text(this.props.title)
+
+        svg.append("text")
+          .attr("x", (width/2))
+          .attr("y", (height-(margin.bottom/2)))
+          .attr("text-anchor", "middle")
+          .style("font-size", "14px")
+          .text("age")
+
+
+      svg.append("text")
+          .attr("x", 100)
+          .attr("y", height)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .style('fill', 'steelblue')
+          .text('• '+this.props.legend1)
+
+
+      svg.append("text")
+          .attr("x", 200)
+          .attr("y", height)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .style('fill', 'darkOrange')
+          .text('• '+this.props.legend2)
 
       var xAxis = d3.axisBottom()
       	.scale(xScale)
@@ -94,23 +127,46 @@ class LineGraph extends Component {
       svg.append('g')
       	.attr('transform', 'translate(' + [0, height - margin.bottom] + ')')
       	.call(xAxis)
+
       svg.append('g')
       	.attr('transform', 'translate(' + [margin.left, 0] + ')')
         .call((yAxis)
-        .tickFormat(d3.format("$,")));
+        .tickFormat(d3.format("$,")))
+  }
 
+  componentDidUpdate() {
+    d3.selectAll("."+this.props.id).remove();
 
+    this.renderGraphs(this.state.width)
+
+  }
+
+  componentDidMount() {
+    const self = this
+    const lWidth = window.screen.width
+    let width = window.innerWidth
+    if (lWidth > 900) {
+      width < 600 ? width = window.innerWidth : width = window.innerWidth/2
+
+      window.addEventListener('resize', function(e){
+        e.preventDefault();
+        width = window.innerWidth
+        width < 600 ? self.setState({width:width}) : self.setState({width:width/2})
+
+      })
+    } else {
+      width = lWidth-20
+    }
+
+    this.renderGraphs(width)
   }
 
 
 
   render() {
 
-
     return (
-      <svg id={this.props.targetSvg}>
-
-      </svg>
+      <svg className="line-graph" id={this.props.targetSvg}/>
     );
   }
 

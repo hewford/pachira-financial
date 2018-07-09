@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
-import Calculator from './components/Calculator'
-import ResultsPage from './components/ResultsPage'
-import { Route } from 'react-router-dom';
+import Calculator from './components/calculator-page/Calculator'
+import ResultsPage from './components/results-page/ResultsPage'
+import { Route, Switch } from 'react-router-dom';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -23,11 +23,11 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Header/>
-
+          <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/calculator" component={Calculator} />
-            <Route exact path="/results" component={ResultsPage} />
-
+            <Route path="/calculator" component={Calculator} />
+            <Route path="/results" component={ResultsPage} />
+          </Switch>
       </MuiThemeProvider>
     );
   }

@@ -1,6 +1,6 @@
 
 import { SET_ASSUMPTIONS, SET_GROWTH_ASSUMPTIONS, SET_CURRENT_STATUS, SET_PENSIONS, SET_RENTALS, RESULTS_ID } from "../actions/types";
-import { calculateFinancials, } from '../utils'
+import { calculateFinancials, calRetirementGoal, calcNeededInitialContribution } from '../utils'
 
 export default function(state = {}, action) {
   let newState = Object.assign({}, state)
@@ -43,14 +43,21 @@ export default function(state = {}, action) {
           for (let i=1; i<newState.rentals.pensionEntries+1; i++) {
             newState.rentals['rental'+i].yearlyIncome = newState.rentals['rental'+i].monthlyIncome*12
           }
+          const contributions = state.currentStatus.contributions
+          const calculations = calculateFinancials(newState, contributions)
+          const retirementGoal = calRetirementGoal(calculations, state)
+          const neededInitialContribution = calcNeededInitialContribution(retirementGoal, state)
+          const planCalculations = calculateFinancials(newState, neededInitialContribution)
 
-          let data = calculateFinancials(newState)
+          newState.data = calculations
 
-          newState.data = data
+          newState.retirementGoal = retirementGoal
 
-          let storingLocal = {data: data.data, data2: data.data2, pensionEntries: newState.pensions.pensionEntries, rentalEntries: newState.rentals.rentalEntries}
+          newState.plan = planCalculations
 
-          localStorage.setItem(RESULTS_ID, JSON.stringify(storingLocal))
+          // let storingLocal = {data: data.data, data2: data.data2, pensionEntries: newState.pensions.pensionEntries, rentalEntries: newState.rentals.rentalEntries, assumptions: newState.assumptions}
+
+          localStorage.setItem(RESULTS_ID, JSON.stringify(newState))
 
           return newState
 

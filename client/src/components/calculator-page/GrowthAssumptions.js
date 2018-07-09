@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setGrowthAssumptions } from '../actions'
+import { setGrowthAssumptions } from '../../actions'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+
+import Snacker from '../commons/Snacker'
 
 
 class GrowthAssumptions extends Component {
@@ -42,6 +44,8 @@ class GrowthAssumptions extends Component {
 
   render(){
 
+    const snackerMessage = 'Time Horizon is the years before retirement. As you get closer to retirement, it is often recommended to invest more conservatively, which tend to yield lower returns'
+
     return (
 
       <Grid className="" container spacing={0} style={{padding: 1}}>
@@ -49,9 +53,10 @@ class GrowthAssumptions extends Component {
         <Grid item xs={12} sm={9} lg={6} xl={6}>
           <Paper className="">
             <Toolbar className="card-header">
-              <Typography variant="title" color="inherit">
+              <Typography className='flex' variant="title" color="inherit">
                 Growth Assumptions
               </Typography>
+              <Snacker message={snackerMessage}/>
             </Toolbar>
 
             <TextField
@@ -96,7 +101,7 @@ class GrowthAssumptions extends Component {
               label="Expected Growth 2"
               className='textField-short'
               margin="normal"
-              helperText="time horizon < 10 years"
+              helperText= 'time horizon < 10 yrs'
               InputProps={{
                 startAdornment: <InputAdornment position="start">%</InputAdornment>,
               }}

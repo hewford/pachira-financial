@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setRentals } from '../actions'
-
+import { setRentals } from '../../actions'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +9,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+
+import Snacker from '../commons/Snacker'
 
 
 class RentalEntries extends Component {
@@ -53,12 +54,15 @@ class RentalEntries extends Component {
 
     //store the data
     this.props.setRentals(data)
+
+    this.props.submitData()
+
   }
 
   renderNewEntryButton(){
     if( this.state.rentalEntries<3 ) {
       return (
-        <Button key={'rentalEntriesButton'} className="start-now" size="small" color="primary"
+        <Button disabled key={'rentalEntriesButton'} className="start-now" size="small" color="primary"
           onClick={()=>{
             this.setState({rentalEntries:this.state.rentalEntries+1})
           }}>
@@ -78,7 +82,8 @@ class RentalEntries extends Component {
 
 
   render(){
-    console.log(this.state)
+    const snackerMessage = 'COMING SOON: Will be able to enter in real-estate rentals to factor into your retirement.'
+
     let rentalEntries = [];
 
     for (let i=1; i<this.state.rentalEntries+1; i++) {
@@ -91,6 +96,9 @@ class RentalEntries extends Component {
           <Typography variant="title" color="inherit" className='flex'>
             Rental Property #{i}
           </Typography>
+          <Typography className='flex coming-soon' variant="subheading" color="inherit" >
+            COMING SOON:
+          </Typography>
           {this.state.rentalEntries>1 && i===this.state.rentalEntries ?
             <Button className="right" color="inherit"
               onClick={(e)=>{
@@ -101,9 +109,11 @@ class RentalEntries extends Component {
                 Remove
                 </Button>
            : <div/>}
+           <Snacker message={snackerMessage}/>
         </Toolbar>
 
           <TextField
+            disabled
             value={this.state[rentalIndex].monthlyIncome}
             color="secondary"
             id="textarea"
@@ -127,6 +137,7 @@ class RentalEntries extends Component {
           />
 
           <TextField
+            disabled
             value={this.state[rentalIndex].yearlyExpenses}
             color="secondary"
             id="textarea"
@@ -149,6 +160,7 @@ class RentalEntries extends Component {
             }}
           />
           <TextField
+            disabled
             value={this.state[rentalIndex].value}
             color="secondary"
             id="textarea"
@@ -193,16 +205,15 @@ class RentalEntries extends Component {
           onClick={(e)=>{
             e.preventDefault()
             this.setRentals()
-            this.props.handleNext()
           }}
         >
-          Finish
+        Finish
         </Button>
       </div>
 
     )
     return(
-      <Grid className="" container spacing={0} style={{padding: 1}}>
+      <Grid className="next-line" container spacing={0} style={{padding: 1}}>
       {rentalEntries}
       </Grid>
     )
