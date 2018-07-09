@@ -184,109 +184,140 @@ class ResultsPage extends Component {
 
     const results = this.props.results
     console.log(results)
+
     if (results) {
-      const dataResults = this.props.results.data
-      const planResults = this.props.results.plan
-      let data = Object.keys(dataResults).map(function(key) {
-        return {
-          age: dataResults[key].age,
-          yearStart: dataResults[key].yearStart
-        };
-      });
+      if (results.data) {
+        const dataResults = this.props.results.data
+        const planResults = this.props.results.plan
+        let data = Object.keys(dataResults).map(function(key) {
+          return {
+            age: dataResults[key].age,
+            yearStart: dataResults[key].yearStart
+          };
+        });
 
-      const { retirementAge, lifeExpectancy } = this.props.results.assumptions
+        const { retirementAge, lifeExpectancy } = this.props.results.assumptions
 
-      let yearRanOut = data.find(function(item){
-      	if(item.yearStart<=0 && item.age>retirementAge){
-      		return true
-          } else {
-      		return false
-          }
-      })
+        let yearRanOut = data.find(function(item){
+        	if(item.yearStart<=0 && item.age>retirementAge){
+        		return true
+            } else {
+        		return false
+            }
+        })
 
-      return (
-        <Grid className="small-padding" container spacing={8} style={{padding: 20}}>
+        return (
+          <Grid className="small-padding" container spacing={8} style={{padding: 20}}>
 
-          <Grid className="small-padding" item xs={12} sm={6} lg={6} xl={6}>
+            <Grid className="small-padding" item xs={12} sm={6} lg={6} xl={6}>
 
-            <Paper className="graph-container">
-              <Toolbar className="text-center plan-header">
+              <Paper className="graph-container">
+                <Toolbar className="text-center plan-header">
 
-                <Typography className="text-white center" variant="title">
-                Your current plan:
-                </Typography>
-              </Toolbar>
+                  <Typography className="text-white center" variant="title">
+                  Your current plan:
+                  </Typography>
+                </Toolbar>
+
+                <SuccessGauge
+                  assumptions={this.props.results.assumptions}
+                  dataResults={dataResults}
+                  retirementGoal={this.props.results.retirementGoal}
+                  id="success-gauge1id"
+                  targetSvg='success-gauge1'/>
+
+                <ContributionsGraph
+                  assumptions={this.props.results.assumptions}
+                  contributionsIncrease={this.props.results.currentStatus.increaseContributions}
+                  dataResults={dataResults}
+                  planResults={planResults}
+                  retirementGoal={this.props.results.retirementGoal}
+                  id="contributions-graph1id"
+                  targetSvg='contributions-graph1'/>
+
+                <AssetBalanceGraph
+                  assumptions={this.props.results.assumptions}
+                  results={dataResults}
+                  id="asset-balance-graph1id"
+                  targetSvg='asset-balance-graph1'/>
+
+                  {this.renderYearRanOut(yearRanOut, lifeExpectancy)}
+
+
+
+
+              </Paper>
+
+            </Grid>
+            <Grid className="small-padding" item xs={12} sm={6} lg={6} xl={6}>
+
+              <Paper className="graph-container">
+
+                <Toolbar className="text-center plan-header">
+
+                  <Typography className="text-white center" variant="title">
+                  Your recommended plan:
+                  </Typography>
+
+                </Toolbar>
 
               <SuccessGauge
                 assumptions={this.props.results.assumptions}
-                dataResults={dataResults}
+                dataResults={this.props.results.plan}
                 retirementGoal={this.props.results.retirementGoal}
-                id="success-gauge1id"
-                targetSvg='success-gauge1'/>
+                id="success-gauge2id"
+                targetSvg='success-gauge2'/>
 
               <ContributionsGraph
                 assumptions={this.props.results.assumptions}
                 contributionsIncrease={this.props.results.currentStatus.increaseContributions}
-                dataResults={dataResults}
-                planResults={planResults}
+                dataResults={planResults}
                 retirementGoal={this.props.results.retirementGoal}
-                id="contributions-graph1id"
-                targetSvg='contributions-graph1'/>
+                planResults={planResults}
+                id="contributions-graph2id"
+                targetSvg='contributions-graph2'/>
 
               <AssetBalanceGraph
                 assumptions={this.props.results.assumptions}
-                results={dataResults}
-                id="asset-balance-graph1id"
-                targetSvg='asset-balance-graph1'/>
+                results={planResults}
+                id="asset-balance-graph2id"
+                targetSvg='asset-balance-graph2'/>
 
-                {this.renderYearRanOut(yearRanOut, lifeExpectancy)}
+              </Paper>
+            </Grid>
 
-
-
-
-            </Paper>
 
           </Grid>
-          <Grid className="small-padding" item xs={12} sm={6} lg={6} xl={6}>
+        )
+      } else {
+        return(
+          <div className='wrapper loading'>
 
-            <Paper className="graph-container">
+            <div className='loading-screen'>
 
-              <Toolbar className="text-center plan-header">
+            <LinearDeterminate/>
 
-                <Typography className="text-white center" variant="title">
-                Your recommended plan:
-                </Typography>
+              {this.renderResultsLoadings()}
 
-              </Toolbar>
+            </div>
+            <div className="loading-back">
 
-            <SuccessGauge
-              assumptions={this.props.results.assumptions}
-              dataResults={this.props.results.plan}
-              retirementGoal={this.props.results.retirementGoal}
-              id="success-gauge2id"
-              targetSvg='success-gauge2'/>
+              <Button
+                className="loading-back-button"
+                variant="contained"
+                color="secondary"
+                onClick={(e)=>{
+                  e.preventDefault()
+                  this.handleBack()
+                }}
+              >
+                Back
+              </Button>
+            </div>
 
-            <ContributionsGraph
-              assumptions={this.props.results.assumptions}
-              contributionsIncrease={this.props.results.currentStatus.increaseContributions}
-              dataResults={planResults}
-              retirementGoal={this.props.results.retirementGoal}
-              planResults={planResults}
-              id="contributions-graph2id"
-              targetSvg='contributions-graph2'/>
-
-            <AssetBalanceGraph
-              assumptions={this.props.results.assumptions}
-              results={planResults}
-              id="asset-balance-graph2id"
-              targetSvg='asset-balance-graph2'/>
-
-            </Paper>
-          </Grid>
-
-
-        </Grid>
-      )
+          </div>
+        );
+      }
     } else {
 
         return(
