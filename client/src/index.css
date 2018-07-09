@@ -12,18 +12,38 @@ body {
   padding-left: 20px;
 }
 
+.pt-1{
+  padding-top: 10px!important;
+}
+.pt-2{
+  padding-top: 20px!important;
+}
+
 .px-2{
   padding-left: 20px;
   padding-right: 20px;
 }
 
+.py-1{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .py-2{
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 20px!important;
+  padding-bottom: 20px!important;
+}
+
+.half-width{
+  width: 50%!important;
 }
 
 .small-padding{
   padding:5px!important;
+}
+
+.small-margin{
+  margin:5px!important;
 }
 
 .my-1{
@@ -40,15 +60,18 @@ body {
   margin-left: 10px!important;
 }
 
-.pt-1{
-  padding-top: 10px!important;
+.mt-2{
+  margin-top: 20px!important;
 }
-.pt-2{
-  padding-top: 20px!important;
-}
+
+
 
 .right{
   float: right!important;
+}
+.left{
+  float: left!important;
+  width: 45%!important;
 }
 
 .next-line{
@@ -64,6 +87,21 @@ body {
 
 .submit-data{
   margin-left: 50px;
+}
+
+.text-darkOrange{
+  color: darkOrange!important;
+  background-color: white!important;
+}
+
+.text-steelblue{
+  color: steelblue!important;
+  background-color: white!important;
+}
+
+.text-primary{
+  color: #004c40!important;
+  background-color: white!important;
 }
 
 text < .tip {
@@ -229,6 +267,14 @@ text < .tip {
 .row {
   display: inline-flex!important;
   margin: auto;
+  overflow: auto;
+}
+
+.width-80{
+  margin:auto!important;
+  width:75%;
+  clear: both;
+  height: 75px;
 }
 
 
@@ -405,6 +451,13 @@ transform:scale(0.5);
     width: 90%;
     margin: 5%!important;
   }
+  .width-80{
+    width:95%!important;
+    clear: both;
+  }
+  .left{
+    max-width: 200px!important;
+  }
 }
 
 svg {
@@ -413,7 +466,7 @@ svg {
 }
 .graph-container{
   position: relative;
-  height: 1200px!important;
+  height: 1600px!important;
   /* padding-right: 10px; */
 } */
 .graph {

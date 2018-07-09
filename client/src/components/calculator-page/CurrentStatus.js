@@ -60,7 +60,7 @@ class CurrentStatus extends Component {
             </Toolbar>
 
             <TextField
-              value={this.state.savings}
+              value={this.state.savings.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.savings.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
               color="secondary"
               id="textarea"
               label="Retirement Savings"
@@ -77,7 +77,7 @@ class CurrentStatus extends Component {
               }}
             />
             <TextField
-              value={this.state.contributions}
+              value={this.state.contributions.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.contributions.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
               color="secondary"
               id="textarea"
               label="Monthly Contributions"
@@ -106,7 +106,7 @@ class CurrentStatus extends Component {
               }}
               onChange={(e)=>{
                 e.preventDefault()
-                let value = e.target.value.replace(/[^0-9]+/g, '');
+                let value = e.target.value.replace(/[^0-9]/g, '')
                 this.setState({increaseContributions: Number(value)
                 })
               }}

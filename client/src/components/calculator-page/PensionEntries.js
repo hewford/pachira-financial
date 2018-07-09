@@ -151,7 +151,8 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={this.state[pensionIndex].monthlyIncome}
+            value={this.state[pensionIndex].monthlyIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state[pensionIndex].monthlyIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+
             color="secondary"
             id="textarea"
             label="Monthly Income"

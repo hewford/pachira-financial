@@ -60,7 +60,7 @@ class GrowthAssumptions extends Component {
             </Toolbar>
 
             <TextField
-              value={this.state.inflation}
+              value={this.state.inflation>20 ? 20 : this.state.inflation}
               color="secondary"
               id="textarea"
               label="Expected Inflation"
@@ -77,7 +77,7 @@ class GrowthAssumptions extends Component {
             />
 
             <TextField
-              value={this.state.growthStep1}
+              value={this.state.growthStep1>100 ? 100 : this.state.growthStep1}
               color="secondary"
               id="textarea"
               label="Expected Growth 1"
@@ -95,7 +95,7 @@ class GrowthAssumptions extends Component {
             />
 
             <TextField
-              value={this.state.growthStep2}
+              value={this.state.growthStep2>100 ? 100 : this.state.growthStep2}
               color="secondary"
               id="textarea"
               label="Expected Growth 2"
@@ -113,7 +113,7 @@ class GrowthAssumptions extends Component {
             />
 
             <TextField
-              value={this.state.growthStep3}
+              value={this.state.growthStep3>100 ? 100 : this.state.growthStep3}
               color="secondary"
               id="textarea"
               label="Expected Growth 3"

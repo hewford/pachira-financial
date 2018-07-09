@@ -168,6 +168,17 @@ class ResultsPage extends Component {
     this.props.history.push('/')
   }
 
+  renderYearRanOut(yearRanOut, lifeExpectancy){
+
+    if(yearRanOut.age<=lifeExpectancy){
+      return(
+        <Typography className="px-2" variant="subheading">
+      Your current plan&#39;s funds run out at age {yearRanOut.age}
+      </Typography>
+      )
+    }
+  }
+
   render(){
 
 
@@ -176,16 +187,22 @@ class ResultsPage extends Component {
     if (results) {
       const dataResults = this.props.results.data
       const planResults = this.props.results.plan
+      let data = Object.keys(dataResults).map(function(key) {
+        return {
+          age: dataResults[key].age,
+          yearStart: dataResults[key].yearStart
+        };
+      });
 
-      // const { retirementAge, lifeExpectancy } = this.props.results.assumptions
+      const { retirementAge, lifeExpectancy } = this.props.results.assumptions
 
-      // let yearRanOut = data.find(function(item){
-      // 	if(item.yearStart<=0 && item.age>retirementAge){
-      // 		return true
-      //     } else {
-      // 		return false
-      //     }
-      // })
+      let yearRanOut = data.find(function(item){
+      	if(item.yearStart<=0 && item.age>retirementAge){
+      		return true
+          } else {
+      		return false
+          }
+      })
 
       return (
         <Grid className="small-padding" container spacing={8} style={{padding: 20}}>
@@ -211,6 +228,7 @@ class ResultsPage extends Component {
                 assumptions={this.props.results.assumptions}
                 contributionsIncrease={this.props.results.currentStatus.increaseContributions}
                 dataResults={dataResults}
+                planResults={planResults}
                 retirementGoal={this.props.results.retirementGoal}
                 id="contributions-graph1id"
                 targetSvg='contributions-graph1'/>
@@ -220,6 +238,11 @@ class ResultsPage extends Component {
                 results={dataResults}
                 id="asset-balance-graph1id"
                 targetSvg='asset-balance-graph1'/>
+
+                {this.renderYearRanOut(yearRanOut, lifeExpectancy)}
+
+
+
 
             </Paper>
 
@@ -248,6 +271,7 @@ class ResultsPage extends Component {
               contributionsIncrease={this.props.results.currentStatus.increaseContributions}
               dataResults={planResults}
               retirementGoal={this.props.results.retirementGoal}
+              planResults={planResults}
               id="contributions-graph2id"
               targetSvg='contributions-graph2'/>
 
@@ -256,12 +280,10 @@ class ResultsPage extends Component {
               results={planResults}
               id="asset-balance-graph2id"
               targetSvg='asset-balance-graph2'/>
+
             </Paper>
           </Grid>
 
-          <Grid className="my-5" item xs={12} sm={9} lg={6} xl={6}>
-            {this.renderTable(dataResults)}
-          </Grid>
 
         </Grid>
       )
@@ -305,7 +327,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {results : state.results}
+  return {results : state.results, calculations: state.calculations}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsPage);

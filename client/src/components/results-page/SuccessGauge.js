@@ -39,8 +39,29 @@ class SuccessGauge extends Component {
           />
 
         <Typography className="px-2" variant="subheading">
-        This plan funds {Math.round(completedness*100)}% of your retirement for the retirement age {retirementAge}. Your asset balance at retirement is ${formattedBalance}, and you need ${formattedGoal}.
+        This plan funds <strong>{Math.round(completedness*100)}%</strong> of your retirement for the retirement age {retirementAge}.
         </Typography>
+
+        <div className="width-80 pt-2">
+          <div className=''>
+          <Typography className="px-2 left" variant="title">
+            Projected:
+          </Typography>
+          </div>
+          <div className=''>
+          <Typography className="px-2 right" variant="subheading">
+            ${formattedBalance}
+          </Typography>
+          </div>
+          <div className=''>
+          <Typography className="px-2 left" variant="title">
+            Needed:
+          </Typography>
+          <Typography className="px-2 right" variant="subheading">
+            ${formattedGoal}
+          </Typography>
+          </div>
+        </div>
 
       </div>
       )

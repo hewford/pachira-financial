@@ -229,10 +229,10 @@ class GaugeGraph extends Component {
       svg.append("text")
         .attr("y", height)
         .attr("x", width/2)
-        .attr("dx", 3)
-        .attr("dy", 5)
+        .attr("dx", 10)
+        .attr("dy", 10)
         .attr("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "30px")
         .style('fill', '#48a999')
         .style("font-weight", 'bold')
         .text(Math.round(this.props.completedness*100) +'%');

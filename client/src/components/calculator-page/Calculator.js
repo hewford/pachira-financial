@@ -73,7 +73,6 @@ getStepContent(step) {
   }
 
   render(){
-    console.log(this.props)
     const steps = this.getSteps();
     const { activeStep } = this.state;
 
@@ -81,7 +80,6 @@ getStepContent(step) {
       <div>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => {
-          console.log(label)
           return (
             <Step key={label}>
               <StepLabel

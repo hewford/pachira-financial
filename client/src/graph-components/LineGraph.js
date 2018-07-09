@@ -88,7 +88,7 @@ class LineGraph extends Component {
         .attr("x", (width / 2))
         .attr("y", (margin.top-10))
         .attr("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "20px")
         .style("text-decoration", "underline")
         .text(this.props.title)
 
@@ -102,7 +102,7 @@ class LineGraph extends Component {
 
       svg.append("text")
           .attr("x", 100)
-          .attr("y", height)
+          .attr("y", height-10)
           .attr("text-anchor", "middle")
           .style("font-size", "16px")
           .style('fill', 'steelblue')
@@ -110,8 +110,8 @@ class LineGraph extends Component {
 
 
       svg.append("text")
-          .attr("x", 200)
-          .attr("y", height)
+          .attr("x", 250)
+          .attr("y", height-10)
           .attr("text-anchor", "middle")
           .style("font-size", "16px")
           .style('fill', 'darkOrange')

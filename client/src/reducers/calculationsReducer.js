@@ -55,8 +55,6 @@ export default function(state = {}, action) {
 
           newState.plan = planCalculations
 
-          // let storingLocal = {data: data.data, data2: data.data2, pensionEntries: newState.pensions.pensionEntries, rentalEntries: newState.rentals.rentalEntries, assumptions: newState.assumptions}
-
           localStorage.setItem(RESULTS_ID, JSON.stringify(newState))
 
           return newState

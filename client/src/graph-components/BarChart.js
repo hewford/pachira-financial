@@ -56,7 +56,7 @@ class BarChart extends Component {
         })
       	.attr('x', function(d) {return xScale(d.x)})
       	.attr('y', function(d) {return yScale(d.y)})
-      	.attr('fill', 'steelblue')
+      	.attr('fill', this.props.fill == 'reverse' ? 'darkOrange' : '#6798c1')
       	.attr('stroke', 'white')
         .attr('strokeWidth', 1)
         .on("mouseover", handleMouseOver)
@@ -65,7 +65,7 @@ class BarChart extends Component {
     function handleMouseOver(d, i) {  // Add interactivity
 
        d3.select(this)
-        .attr('fill', "orange");
+        .attr('fill', this.attributes.fill.value=='darkOrange' ? "#6798c1" : 'orange');
 
         svg.append("text")
          .attr("class", 'tip')
@@ -83,10 +83,11 @@ class BarChart extends Component {
         .attr("y", yScale(d.y)-7)
         .attr("x", xScale(d.x))
         .attr("text-anchor", "middle")
-        .style("font-size", "12px")
+        .style("font-size", "16px")
         .text(d3.format("$,")(d.y))
-        .attr('fill','darkGray')
-        .attr('stroke','#000000')
+        .attr('fill','orange')
+        .attr('stroke','black')
+        .attr('stroke-width',"1.4")
         .attr('font-family','Arial')
 
 
@@ -95,9 +96,8 @@ class BarChart extends Component {
      }
 
      function handleMouseOut(d, i) {
-       // Use D3 to select element, change color back to normal
        d3.select(this)
-        .attr('fill', "steelblue");
+        .attr('fill', this.attributes.fill.value=='#6798c1' ? "darkOrange" : '#6798c1');
 
       d3.selectAll('.tip').remove();
 
@@ -105,9 +105,9 @@ class BarChart extends Component {
 
      svg.append("text")
        .attr("x", (width / 2))
-       .attr("y", (margin.top-20))
+       .attr("y", (margin.top-25))
        .attr("text-anchor", "middle")
-       .style("font-size", "16px")
+       .style("font-size", "20px")
        .style("text-decoration", "underline")
        .text(this.props.title)
 
