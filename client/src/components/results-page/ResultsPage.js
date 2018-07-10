@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,8 +14,6 @@ import SuccessGauge from './SuccessGauge'
 import ContributionsGraph from './ContributionsGraph'
 import AssetBalanceGraph from './AssetBalanceGraph'
 import LinearDeterminate from '../commons/LinearDeterminate'
-
-
 
 class ResultsPage extends Component {
 
@@ -126,9 +123,6 @@ class ResultsPage extends Component {
 
     )
 
-
-
-
     if(results){
       let data = Object.keys(results).map(function(key) {
         return results[key];
@@ -169,7 +163,6 @@ class ResultsPage extends Component {
   }
 
   renderYearRanOut(yearRanOut, lifeExpectancy){
-
     if(yearRanOut.age<=lifeExpectancy){
       return(
         <Typography className="px-2" variant="subheading">
@@ -181,12 +174,9 @@ class ResultsPage extends Component {
 
   render(){
 
+    // render results to client if results exists, otherwise render a loading screen
+    if (this.props.results) {
 
-    const results = this.props.results
-    console.log(results)
-
-    if (results) {
-      if (results.data) {
         const dataResults = this.props.results.data
         const planResults = this.props.results.plan
         let data = Object.keys(dataResults).map(function(key) {
@@ -241,7 +231,7 @@ class ResultsPage extends Component {
                   id="asset-balance-graph1id"
                   targetSvg='asset-balance-graph1'/>
 
-                  {this.renderYearRanOut(yearRanOut, lifeExpectancy)}
+                  {yearRanOut ? this.renderYearRanOut(yearRanOut, lifeExpectancy):''}
 
 
 
@@ -286,38 +276,10 @@ class ResultsPage extends Component {
               </Paper>
             </Grid>
 
-
+{this.renderTable(dataResults)}
           </Grid>
         )
-      } else {
-        return(
-          <div className='wrapper loading'>
 
-            <div className='loading-screen'>
-
-            <LinearDeterminate/>
-
-              {this.renderResultsLoadings()}
-
-            </div>
-            <div className="loading-back">
-
-              <Button
-                className="loading-back-button"
-                variant="contained"
-                color="secondary"
-                onClick={(e)=>{
-                  e.preventDefault()
-                  this.handleBack()
-                }}
-              >
-                Back
-              </Button>
-            </div>
-
-          </div>
-        );
-      }
     } else {
 
         return(

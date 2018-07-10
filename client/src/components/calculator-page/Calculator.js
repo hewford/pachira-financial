@@ -26,9 +26,6 @@ class Calculator extends Component {
     }
   }
 
-
-
-
   getSteps() {
   return ['Enter retirement assumptions', 'Enter inflation and rate of return assumptions' ,'Enter your current financial snapshot', 'Enter any known pensions', 'Enter any rental income'];
 }
@@ -62,13 +59,8 @@ getStepContent(step) {
     }));
   };
 
-  handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };
-
   submitData = () => {
+    // this.props.buildPlan()
     this.props.history.push('/results')
   }
 
@@ -96,47 +88,6 @@ getStepContent(step) {
           );
         })}
       </Stepper>
-      {activeStep === steps.length && (
-        <Grid className='submit-data' container spacing={0} style={{padding: 1}}>
-
-          <Grid item xs={12} sm={9} lg={6} xl={6}>
-            <Paper square elevation={1} >
-              <Typography className="ml-1 pt-1" variant="title">Please enter your email to recieve a pdf</Typography>
-              <TextField
-                value={this.state.email}
-                color="secondary"
-                id="textarea"
-                label="Email Address"
-                className='textField'
-                margin="normal"
-                onChange={(e)=>{
-                  e.preventDefault()
-                  let value = e.target.value
-                  this.setState({email: value})
-                }}
-              />
-
-            </Paper>
-            <div className="my-1">
-              <Button
-                onClick={this.handleBack}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.props.submitData}
-              >
-                Submit
-              </Button>
-            </div>
-          </Grid>
-        </Grid>
-
-        )}
-
-
       </div>
     );
   }

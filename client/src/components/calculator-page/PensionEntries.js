@@ -133,7 +133,7 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={this.state[pensionIndex].cola}
+            value={((this.state[pensionIndex].cola).toFixed(2))}
             color="secondary"
             id="textarea"
             label="COLA"

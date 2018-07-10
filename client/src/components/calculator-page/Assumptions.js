@@ -21,7 +21,7 @@ import Snacker from '../commons/Snacker'
 
 
 class Assumptions extends Component {
-
+// TODO: build a config file.
   constructor(props){
     super(props)
     this.state={
@@ -41,7 +41,7 @@ class Assumptions extends Component {
   }
 
   setAssumptions() {
-    this.props.setAssumptions(this.state)
+    console.log(this.props.setAssumptions(this.state))
   }
 
 
@@ -50,6 +50,7 @@ class Assumptions extends Component {
   };
 
   renderAlert() {
+    // FIXME: make it own component
     if (this.state.alert) {
       return (<Dialog
         open={this.state.alert}
@@ -104,12 +105,12 @@ class Assumptions extends Component {
             </Toolbar>
 
             <TextField
-              value={this.state.currentAge<=95 ? this.state.currentAge : 95}
+              value={this.state.currentAge <= 95 ? this.state.currentAge : 95}
               color="secondary"
               id="textarea"
               label="Current Age"
               className='textField-tiny'
-              helperText={this.state.currentAge<this.state.retirementAge ? '' : 'Current Age be less than Retirement Age'}
+              helperText={this.state.currentAge < this.state.retirementAge ? '' : 'Current Age be less than Retirement Age'}
               FormHelperTextProps={{error:true}}
               margin="normal"
               onChange={(e)=>{
@@ -172,6 +173,7 @@ class Assumptions extends Component {
                 this.setState({desiredIncome: value})
               }}
             />
+
             <TextField
               value={this.state.desiredEstate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.desiredEstate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
               color="secondary"
@@ -194,7 +196,6 @@ class Assumptions extends Component {
           <div className="my-1">
             <Button
               disabled
-              className=''
             >
               Back
             </Button>
@@ -203,6 +204,7 @@ class Assumptions extends Component {
               color="primary"
               onClick={(e)=>{
                 e.preventDefault()
+                // FIXME: move to a function -> isInputValid()
                 if (this.state.currentAge<this.state.retirementAge && this.state.retirementAge<this.state.lifeExpectancy && this.state.desiredIncome>0) {
                   if (this.state.currentAge<1 || this.state.retirementAge<1 || this.state.lifeExpectancy<1) {
                     this.setState({alert:true})
@@ -214,7 +216,6 @@ class Assumptions extends Component {
                 } else {
                   this.setState({alert:true})
                 }
-
               }}
             >
               Next

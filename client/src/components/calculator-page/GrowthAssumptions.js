@@ -13,16 +13,20 @@ import Button from '@material-ui/core/Button';
 
 import Snacker from '../commons/Snacker'
 
+const AVERAGE_INFLATION_RATE = 2.2
+const AGGRESSIVE_RATE_OF_RETURN = 8
+const MODERATE_RATE_OF_RETURN = 6.5
+const CONSERVATIVE_RATE_OF_RETURN = 4
 
 class GrowthAssumptions extends Component {
 
   constructor(props){
     super(props)
     this.state={
-      inflation: 2.2,
-      growthStep1: 7,
-      growthStep2: 6.5,
-      growthStep3: 4
+      inflation: AVERAGE_INFLATION_RATE,
+      growthStep1: AGGRESSIVE_RATE_OF_RETURN,
+      growthStep2: MODERATE_RATE_OF_RETURN,
+      growthStep3: CONSERVATIVE_RATE_OF_RETURN
     }
   }
 

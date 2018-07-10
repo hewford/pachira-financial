@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Typography from '@material-ui/core/Typography';
 import GaugeGraph from '../../graph-components/GaugeGraph'
+import {toDollarInterger} from '../../utils/formatting-tools'
 
 class SuccessGauge extends Component {
 
@@ -18,13 +19,9 @@ class SuccessGauge extends Component {
       return item.age === retirementAge
     }).yearStart
 
-    let formattedBalance = (balanceAtRetirement).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    let formattedBalance = toDollarInterger(balanceAtRetirement)
 
-    formattedBalance = formattedBalance.substring(0,formattedBalance.length-3);
-
-    let formattedGoal = (this.props.retirementGoal).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-
-    formattedGoal = formattedGoal.substring(0,formattedGoal.length-3);
+    let formattedGoal = toDollarInterger(this.props.retirementGoal)
 
     const completedness = (balanceAtRetirement/this.props.retirementGoal)
 

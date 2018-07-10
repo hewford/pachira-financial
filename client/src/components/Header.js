@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import logo from '../../src/logo-white.png';
+import logo from '../../src/logo-white2.png';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -27,7 +27,7 @@ class Header extends Component {
               <img alt="logo" className="header-logo" src={logo} width="50px"/>
             </Link>
             <Typography variant="title" color="inherit" className='flex'>
-              Pachira Financial
+              Pachira Financial Calculator
             </Typography>
               { this.props.auth ? <Button href="/api/logout" color="inherit">Log Out</Button> : <Button href="/auth/google" color="inherit">Log In</Button> }
           </Toolbar>
