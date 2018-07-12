@@ -3,7 +3,7 @@ import { SET_ASSUMPTIONS, SET_GROWTH_ASSUMPTIONS, SET_CURRENT_STATUS, SET_PENSIO
 import { calculateFinancials, calRetirementGoal, calcNeededInitialContribution } from '../utils'
 
 export default function(state = {}, action) {
-  let newState = Object.assign({}, state)
+  let newState = {...state}
     switch (action.type) {
         case SET_ASSUMPTIONS:
 
@@ -55,7 +55,9 @@ export default function(state = {}, action) {
 
           newState.plan = planCalculations
 
-          localStorage.setItem(RESULTS_ID, JSON.stringify(newState))
+          console.log(localStorage.setItem(RESULTS_ID, JSON.stringify(newState)))
+
+          console.log(window.performance.now(), 'local storage set')
 
           return newState
 

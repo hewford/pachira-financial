@@ -13,6 +13,9 @@ import Button from '@material-ui/core/Button';
 
 import Snacker from '../commons/Snacker'
 
+import { DEFAULT_PENSION_START, DEFAULT_COST_OF_LIVING_ADJUSTMENT, DEFAULT_MONTHLY_INCOME } from '../../utils/config-state'
+import { toRatePercentage } from '../../utils/formatting-tools'
+
 class PensionEntries extends Component {
 
   constructor(props){
@@ -20,19 +23,19 @@ class PensionEntries extends Component {
     this.state={
       pensionEntries: 1,
       pension1: {
-        pensionStart: 65,
-        cola: 3,
-        monthlyIncome: 0
+        pensionStart: DEFAULT_PENSION_START,
+        cola: DEFAULT_COST_OF_LIVING_ADJUSTMENT,
+        monthlyIncome: DEFAULT_MONTHLY_INCOME
       },
       pension2: {
-        pensionStart: 65,
-        cola: 3,
-        monthlyIncome: 0
+        pensionStart: DEFAULT_PENSION_START,
+        cola: DEFAULT_COST_OF_LIVING_ADJUSTMENT,
+        monthlyIncome: DEFAULT_MONTHLY_INCOME
       },
       pension3: {
-        pensionStart: 65,
-        cola: 3,
-        monthlyIncome: 0
+        pensionStart: DEFAULT_PENSION_START,
+        cola: DEFAULT_COST_OF_LIVING_ADJUSTMENT,
+        monthlyIncome: DEFAULT_MONTHLY_INCOME
       }
     }
   }
@@ -133,7 +136,7 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={((this.state[pensionIndex].cola).toFixed(2))}
+            value={((this.state[pensionIndex].cola))}
             color="secondary"
             id="textarea"
             label="COLA"
@@ -141,7 +144,7 @@ class PensionEntries extends Component {
             margin="normal"
             onChange={(e)=>{
               e.preventDefault()
-              let value = e.target.value.replace(/[^0-9]+/g, '');
+              let value = toRatePercentage(e.target.value)
               this.setState({[pensionIndex]:{
                   pensionStart: this.state[pensionIndex].pensionStart,
                   cola: Number(value),

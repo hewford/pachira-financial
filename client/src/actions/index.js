@@ -35,6 +35,7 @@ export const setRentals = (data) => {
 
 export const fetchResults = () => {
   let data = JSON.parse(localStorage.getItem(RESULTS_ID) || null)
+  console.log(window.performance.now(), 'local storage pulled')
 
   return {type: FETCH_RESULTS, payload: data}
 }

@@ -61,7 +61,7 @@ getStepContent(step) {
 
   submitData = () => {
     // this.props.buildPlan()
-    this.props.history.push('/results')
+    this.props.history.push('/results?r='+Math.random())
   }
 
   render(){

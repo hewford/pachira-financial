@@ -19,17 +19,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Alert from '../commons/Alert'
 import Snacker from '../commons/Snacker'
 
+import { DEFAULT_CURRENT_AGE, DEFAULT_RETIREMENT_AGE, DEFAULT_LIFE_EXPECTANCY, DEFAULT_DESIRED_INCOME, DEFAULT_DESIRED_ESTATE } from '../../utils/config-state'
+
 
 class Assumptions extends Component {
 // TODO: build a config file.
   constructor(props){
     super(props)
     this.state={
-      currentAge: 30,
-      retirementAge: 65,
-      lifeExpectancy: 95,
-      desiredIncome: 45000,
-      desiredEstate: 0,
+      currentAge: DEFAULT_CURRENT_AGE,
+      retirementAge: DEFAULT_RETIREMENT_AGE,
+      lifeExpectancy: DEFAULT_LIFE_EXPECTANCY,
+      desiredIncome: DEFAULT_DESIRED_INCOME,
+      desiredEstate: DEFAULT_DESIRED_ESTATE,
       alert: false
     }
   }

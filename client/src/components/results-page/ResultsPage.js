@@ -26,7 +26,9 @@ class ResultsPage extends Component {
   }
 
   componentDidMount(){
+    console.log(window.performance.now(), 'fetched local storage')
     this.props.fetchResults()
+
   }
 
   renderTestBarChart = (results) => {
@@ -173,6 +175,8 @@ class ResultsPage extends Component {
   }
 
   render(){
+
+    console.log(window.performance.now(), 'rendered results')
 
     // render results to client if results exists, otherwise render a loading screen
     if (this.props.results) {

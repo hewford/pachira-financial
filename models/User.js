@@ -7,7 +7,13 @@ const userSchema = new Schema({
   gender: String,
   firstName: String,
   lastName: String,
-  photo: String
+  photo: String,
+  planInputs: {
+    assumptions: Object,
+    growthAssumptions: Object,
+    currentStatus: Object,
+    pensions: Object
+  }
 })
 
 mongoose.model('users', userSchema)

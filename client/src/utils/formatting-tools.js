@@ -6,5 +6,14 @@ export const toDollarInterger = (item) => {
 }
 
 export const toRatePercentage = (value) => {
+  let formattedValue = value.replace(/[^0-9.]/g, '')
+  if (formattedValue.indexOf('.')>=0) {
+    let splitByDecimalValue = formattedValue.split('.')
+    splitByDecimalValue[0] = splitByDecimalValue[0].slice(0,3)
+    splitByDecimalValue[1] = splitByDecimalValue[1].slice(0,3)
+    return splitByDecimalValue.join('.')
+  } else {
+    return formattedValue
+  }
 
 }

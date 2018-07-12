@@ -13,10 +13,9 @@ import Button from '@material-ui/core/Button';
 
 import Snacker from '../commons/Snacker'
 
-const AVERAGE_INFLATION_RATE = 2.2
-const AGGRESSIVE_RATE_OF_RETURN = 8
-const MODERATE_RATE_OF_RETURN = 6.5
-const CONSERVATIVE_RATE_OF_RETURN = 4
+import { AVERAGE_INFLATION_RATE, AGGRESSIVE_RATE_OF_RETURN, MODERATE_RATE_OF_RETURN, CONSERVATIVE_RATE_OF_RETURN } from '../../utils/config-state'
+import { toRatePercentage } from '../../utils/formatting-tools'
+
 
 class GrowthAssumptions extends Component {
 
@@ -64,7 +63,7 @@ class GrowthAssumptions extends Component {
             </Toolbar>
 
             <TextField
-              value={this.state.inflation>20 ? 20 : this.state.inflation}
+              value={this.state.inflation>20.999 ? 20 : this.state.inflation}
               color="secondary"
               id="textarea"
               label="Expected Inflation"
@@ -75,7 +74,7 @@ class GrowthAssumptions extends Component {
               }}
               onChange={(e)=>{
                 e.preventDefault()
-                let value = e.target.value.replace(/[^0-9.]/g, '')
+                let value = toRatePercentage(e.target.value)
                 this.setState({inflation: (value)})
               }}
             />
@@ -93,7 +92,7 @@ class GrowthAssumptions extends Component {
               }}
               onChange={(e)=>{
                 e.preventDefault()
-                let value = e.target.value.replace(/[^0-9.]/g, '')
+                let value = toRatePercentage(e.target.value)
                 this.setState({growthStep1: (value)})
               }}
             />
@@ -111,7 +110,7 @@ class GrowthAssumptions extends Component {
               }}
               onChange={(e)=>{
                 e.preventDefault()
-                let value = e.target.value.replace(/[^0-9.]/g, '')
+                let value = toRatePercentage(e.target.value)
                 this.setState({growthStep2: (value)})
               }}
             />
@@ -129,7 +128,7 @@ class GrowthAssumptions extends Component {
               }}
               onChange={(e)=>{
                 e.preventDefault()
-                let value = e.target.value.replace(/[^0-9.]/g, '')
+                let value = toRatePercentage(e.target.value)
                 this.setState({growthStep3: (value)})
               }}
             />

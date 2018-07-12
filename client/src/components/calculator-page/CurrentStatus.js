@@ -13,15 +13,16 @@ import Button from '@material-ui/core/Button';
 
 import Snacker from '../commons/Snacker'
 
+import { DEFAULT_SAVINGS, DEFAULT_CONTRIBUTIONS, DEFAULT_CONTRIBUTION_INCREASE } from '../../utils/config-state'
 
 class CurrentStatus extends Component {
 
   constructor(props){
     super(props)
     this.state={
-      savings: 0,
-      contributions: 0,
-      increaseContributions: 0
+      savings: DEFAULT_SAVINGS,
+      contributions: DEFAULT_CONTRIBUTIONS,
+      increaseContributions: DEFAULT_CONTRIBUTION_INCREASE
     }
   }
 
