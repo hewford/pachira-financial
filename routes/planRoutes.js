@@ -6,12 +6,19 @@ const User = mongoose.model('users')
 const Plan = mongoose.model('plans')
 
 module.exports = app => {
+
+  app.get('api/test', (req, res) =>{
+    res.send('success')
+  })
   
   // store user assumptions entries
   app.post('/api/post-assumptions', (req, res) => {
     console.log(req.user)
     User.findOne({ _id: req.user }).then(user => {
       console.log(user)
+      if(!user) {
+        res.status(400).send('user not found')
+      }
 
       user.planInputs.assumptions = req.body
 

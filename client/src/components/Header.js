@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import React, {Component} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +16,10 @@ class Header extends Component {
 
   componentDidMount() {
     this.props.fetchUser();
+
+    const res = axios.get('/api/test');
+    console.log(res)
+
   }
 
   render() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setPensions } from '../../actions'
+import {toDollarInterger} from '../../utils/formatting-tools'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -60,7 +61,7 @@ class PensionEntries extends Component {
       delete data['pension'+i]
     }
 
-    //store the data
+    // send component's state to server and set Redux store.
     this.props.setPensions(data)
   }
 
@@ -88,6 +89,7 @@ class PensionEntries extends Component {
 
   render(){
 
+    // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = 'COLA is the cost of living adjustment in which a pensions payout increases each year after you start collecting'
 
     let pensionEntries = [];
@@ -154,7 +156,7 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={this.state[pensionIndex].monthlyIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state[pensionIndex].monthlyIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+            value={toDollarInterger(this.state.monthlyIncome)}
 
             color="secondary"
             id="textarea"

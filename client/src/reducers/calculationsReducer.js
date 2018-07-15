@@ -1,12 +1,14 @@
+// NOTICE: This reducer is only used if there is no server to store data and make the calculations. This reducer stores data and calculates financial plan and stores the plan in local storage. Currently not being used since the the server is serving a mongo database.
 
 import { SET_ASSUMPTIONS, SET_GROWTH_ASSUMPTIONS, SET_CURRENT_STATUS, SET_PENSIONS, SET_RENTALS, RESULTS_ID, GET_CALCULATIONS } from "../actions/types";
 import { calculateFinancials, calRetirementGoal, calcNeededInitialContribution } from '../utils'
 
 export default function(state = {}, action) {
+  // initialize new state that is mutable.
   let newState = {...state}
     switch (action.type) {
         case SET_ASSUMPTIONS:
-
+          
           newState.assumptions = action.payload
 
           return newState

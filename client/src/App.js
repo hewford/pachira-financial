@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 
-
+// define the color theme for the project with Material Design Component
 const theme = createMuiTheme({
   palette: {
     primary: { main: '#48a999' },
@@ -19,10 +19,11 @@ const theme = createMuiTheme({
 
 class App extends Component {
   render() {
-    //Learn about this code on MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout
+
     return (
       <MuiThemeProvider theme={theme}>
-        <Header/>
+
+        <Header/> {/* render header outside of router switch so that it's always visible */}
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route path="/calculator" component={Calculator} />

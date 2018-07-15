@@ -31,6 +31,7 @@ class ResultsPage extends Component {
 
   }
 
+/* below is used to use action dispatch, fetchResults to pull data from local storage instead of server */
   // componentDidMount(){
     // console.log(window.performance.now(), 'fetched plan from local storage')
     // this.props.fetchResults()
@@ -181,9 +182,6 @@ class ResultsPage extends Component {
 
   render(){
 
-    console.log(this.props.results)
-    console.log(this.props.calculations)
-    //
     console.log(window.performance.now(), 'rendered results')
 
     // render results to client if results exists, otherwise render a loading screen

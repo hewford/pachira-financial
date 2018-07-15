@@ -36,17 +36,20 @@ class GrowthAssumptions extends Component {
   }
 
   setGrowthAssumptions() {
+    // make sure state is a Number (using RegEx formatting could make value a string)
     let data = this.state
     data.inflation = Number(data.inflation)
     data.growthStep1 = Number(data.growthStep1)
     data.growthStep2 = Number(data.growthStep2)
     data.growthStep3 = Number(data.growthStep3)
+    // send component's state to server and set Redux store.
     this.props.setGrowthAssumptions(this.state)
   }
 
 
   render(){
 
+    // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = 'Time Horizon is the years before retirement. As you get closer to retirement, it is often recommended to invest more conservatively, which tend to yield lower returns'
 
     return (

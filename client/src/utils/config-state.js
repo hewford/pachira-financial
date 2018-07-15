@@ -1,3 +1,4 @@
+// configure state defaults for the calculator page.
 export const DEFAULT_CURRENT_AGE = 30,
 DEFAULT_RETIREMENT_AGE = 65,
 DEFAULT_LIFE_EXPECTANCY = 95,

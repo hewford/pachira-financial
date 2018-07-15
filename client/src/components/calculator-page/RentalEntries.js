@@ -82,6 +82,8 @@ class RentalEntries extends Component {
 
 
   render(){
+
+    // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = 'COMING SOON: Will be able to enter in real-estate rentals to factor into your retirement.'
 
     let rentalEntries = [];

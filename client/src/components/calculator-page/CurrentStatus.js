@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentStatus } from '../../actions'
+import {toDollarInterger} from '../../utils/formatting-tools'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -33,6 +34,7 @@ class CurrentStatus extends Component {
   }
 
   setCurrentStatus() {
+    // send component's state to server and set Redux store.
     let data = this.state
     this.props.setCurrentStatus(data)
   }
@@ -40,6 +42,7 @@ class CurrentStatus extends Component {
 
   render(){
 
+    // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = 'It is often recommended to increase contributions each year at a growth rate reflecting raises you recieve each year.'
 
     return (
@@ -61,7 +64,7 @@ class CurrentStatus extends Component {
             </Toolbar>
 
             <TextField
-              value={this.state.savings.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.savings.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+              value={toDollarInterger(this.state.savings)}
               color="secondary"
               id="textarea"
               label="Retirement Savings"
@@ -78,7 +81,7 @@ class CurrentStatus extends Component {
               }}
             />
             <TextField
-              value={this.state.contributions.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.contributions.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+              value={toDollarInterger(this.state.contributions)}
               color="secondary"
               id="textarea"
               label="Monthly Contributions"

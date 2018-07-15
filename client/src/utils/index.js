@@ -1,3 +1,4 @@
+// NOTICE: currently not being used on the client side. Calculations currently happen on the server side.
 import _ from "lodash";
 
 /*========== calcIncomeNeeds ==========*/

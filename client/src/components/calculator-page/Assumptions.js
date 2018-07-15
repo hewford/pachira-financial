@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setAssumptions } from '../../actions'
+import {toDollarInterger} from '../../utils/formatting-tools'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +24,7 @@ import { DEFAULT_CURRENT_AGE, DEFAULT_RETIREMENT_AGE, DEFAULT_LIFE_EXPECTANCY, D
 
 
 class Assumptions extends Component {
-// TODO: build a config file.
+
   constructor(props){
     super(props)
     this.state={
@@ -37,20 +38,38 @@ class Assumptions extends Component {
   }
 
   componentWillMount() {
+    // if redux store contains assumptions state data, override defaults with stored date
     if (this.props.assumptions) {
       this.setState(this.props.assumptions)
     }
   }
 
   setAssumptions() {
-    console.log(this.props.setAssumptions(this.state))
+    // send component's state to server and set Redux store.
+    this.props.setAssumptions(this.state)
+  }
+
+  isInputValid() {
+    if (this.state.currentAge<this.state.retirementAge && this.state.retirementAge<this.state.lifeExpectancy && this.state.desiredIncome>0) {
+      if (this.state.currentAge<1 || this.state.retirementAge<1 || this.state.lifeExpectancy<1) {
+        this.setState({alert:true})
+      } else {
+        this.setAssumptions()
+        this.props.handleNext()
+      }
+
+    } else {
+      this.setState({alert:true})
+    }
   }
 
 
   alertClose = () => {
+    // closes alert pop-up box
     this.setState({ alert: false });
   };
 
+  // render alert diaglog if textfield input logic fails by changing state's alert to true
   renderAlert() {
     // FIXME: make it own component
     if (this.state.alert) {
@@ -86,7 +105,7 @@ class Assumptions extends Component {
 
 
   render(){
-
+    // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = "Enter desired retirement income in today's dollars."
 
     return (
@@ -158,7 +177,7 @@ class Assumptions extends Component {
             />
 
             <TextField
-              value={this.state.desiredIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.desiredIncome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+              value={toDollarInterger(this.state.desiredIncome)}
               color="secondary"
               id="textarea"
               label="Desired Retirement Income"
@@ -177,7 +196,7 @@ class Assumptions extends Component {
             />
 
             <TextField
-              value={this.state.desiredEstate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').substring(0,this.state.desiredEstate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').length-3)}
+              value={toDollarInterger(this.state.desiredEstate)}
               color="secondary"
               id="textarea"
               label="Desired Estate"
@@ -206,18 +225,7 @@ class Assumptions extends Component {
               color="primary"
               onClick={(e)=>{
                 e.preventDefault()
-                // FIXME: move to a function -> isInputValid()
-                if (this.state.currentAge<this.state.retirementAge && this.state.retirementAge<this.state.lifeExpectancy && this.state.desiredIncome>0) {
-                  if (this.state.currentAge<1 || this.state.retirementAge<1 || this.state.lifeExpectancy<1) {
-                    this.setState({alert:true})
-                  } else {
-                    this.setAssumptions()
-                    this.props.handleNext()
-                  }
-
-                } else {
-                  this.setState({alert:true})
-                }
+                this.isInputValid()
               }}
             >
               Next
