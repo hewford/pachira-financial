@@ -70,7 +70,7 @@ getStepContent(step) {
 
     return (
       <div>
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper activeStep = {activeStep} orientation = "vertical">
         {steps.map((label, index) => {
           return (
             <Step key={label}>

@@ -19,7 +19,8 @@ module.exports = app => {
   );
   app.get('/api/current_user', (req, res) => {
     console.log(req.user)
-    User.findOne({ _id: req.user }).then(existingUser => {
+    User.findOne({ _id: req.user }).exec((err, existingUser) => {
+      if(err){console.log('error')}
       console.log(existingUser)
       res.send(existingUser)
     })
