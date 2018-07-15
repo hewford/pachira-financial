@@ -1,6 +1,17 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+const planSchema = new Schema({
+  assumptions: Object,
+  growthAssumptions: Object,
+  currentStatus: Object,
+  pensions: Object,
+  currentPlan: Object,
+  retirementGoal: Number,
+  neededInitialContributions: Number,
+  recommendedPlan: Object
+})
+
 const userSchema = new Schema({
   googleId: String,
   email: String,
@@ -13,7 +24,9 @@ const userSchema = new Schema({
     growthAssumptions: Object,
     currentStatus: Object,
     pensions: Object
-  }
+  },
+  plan: planSchema
 })
 
 mongoose.model('users', userSchema)
+mongoose.model('plans', planSchema)

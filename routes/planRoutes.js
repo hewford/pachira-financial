@@ -1,17 +1,11 @@
 const passport = require('passport')
 const mongoose = require('mongoose')
 require("../models/User");
+const tools = require('../utils/financial-calculations')
 const User = mongoose.model('users')
+const Plan = mongoose.model('plans')
 
 module.exports = app => {
-
-  app.get('/api/current_user', (req, res) => {
-    console.log(req.user)
-    User.findOne({ _id: req.user }).then(existingUser => {
-      console.log(existingUser)
-      res.send(existingUser)
-    })
-  })
   
   // store user assumptions entries
   app.post('/api/post-assumptions', (req, res) => {
@@ -19,11 +13,11 @@ module.exports = app => {
     User.findOne({ _id: req.user }).then(user => {
       console.log(user)
 
-      user.planInputs.assumptions = req.body.assumptions
+      user.planInputs.assumptions = req.body
 
       user.save()
 
-      res.send(user)
+      res.send(user.planInputs.assumptions)
     })
   })
 
@@ -33,11 +27,11 @@ module.exports = app => {
     User.findOne({ _id: req.user }).then(user => {
       console.log(user)
 
-      user.planInputs.growthAssumptions = req.body.growthAssumptions
+      user.planInputs.growthAssumptions = req.body
 
-      user.save
+      user.save()
 
-      res.send(user)
+      res.send(user.planInputs.growthAssumptions)
     })
   })
 
@@ -46,11 +40,11 @@ module.exports = app => {
     User.findOne({ _id: req.user }).then(user => {
       console.log(user)
 
-      user.planInputs.currentStatus = req.body.currentStatus
+      user.planInputs.currentStatus = req.body
 
-      user.save
+      user.save()
 
-      res.send(user)
+      res.send(user.planInputs.currentStatus)
     })
   })
 
@@ -60,11 +54,41 @@ module.exports = app => {
     User.findOne({ _id: req.user }).then(user => {
       console.log(user)
 
-      user.planInputs.pensions = req.body.pensions
+      user.planInputs.pensions = req.body
 
-      user.save
+      user.save()
 
-      res.send(user)
+      res.send(user.planInputs.pensions)
     })
   })
+
+  // calculate user retirement plan
+  app.get('/api/calculate', (req, res) => {
+    console.log(req.user)
+    console.log(tools)
+    User.findOne({ _id: req.user }).then(user => {
+      console.log(user)
+
+      let plan = new Plan({
+        assumptions: user.planInputs.assumptions,
+        growthAssumptions: user.planInputs.growthAssumptions,
+        currentStatus: user.planInputs.currentStatus,
+        pensions: user.planInputs.pensions
+      })
+
+      const contributions = user.planInputs.currentStatus.contributions
+
+      plan.currentPlan = tools.calculateFinancials(user.planInputs, contributions)
+
+      plan.retirementGoal = tools.calRetirementGoal(plan.currentPlan, user.planInputs)
+
+      plan.neededInitialContribution = tools.calcNeededInitialContribution(plan.retirementGoal, user.planInputs)
+
+      plan.recommendedPlan = tools.calculateFinancials(user.planInputs, plan.neededInitialContribution)
+      
+      res.send(plan)
+    })
+  })
+
+
 }

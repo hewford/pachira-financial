@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchResults } from '../../actions'
+import { fetchResults, getCalculations } from '../../actions'
 import ReactTable from 'react-table';
 import Grid from '@material-ui/core/Grid';
 import LineChart from 'react-d3-components/lib/LineChart';
@@ -25,11 +25,16 @@ class ResultsPage extends Component {
     }
   }
 
-  componentDidMount(){
-    console.log(window.performance.now(), 'fetched local storage')
-    this.props.fetchResults()
+  componentWillMount(){
+    console.log(window.performance.now(), 'fetched plan from API')
+    this.props.getCalculations()
 
   }
+
+  // componentDidMount(){
+    // console.log(window.performance.now(), 'fetched plan from local storage')
+    // this.props.fetchResults()
+  // }
 
   renderTestBarChart = (results) => {
 
@@ -176,13 +181,17 @@ class ResultsPage extends Component {
 
   render(){
 
+    console.log(this.props.results)
+    console.log(this.props.calculations)
+    //
     console.log(window.performance.now(), 'rendered results')
 
     // render results to client if results exists, otherwise render a loading screen
     if (this.props.results) {
 
-        const dataResults = this.props.results.data
-        const planResults = this.props.results.plan
+        const dataResults = this.props.results.currentPlan
+        const planResults = this.props.results.recommendedPlan
+
         let data = Object.keys(dataResults).map(function(key) {
           return {
             age: dataResults[key].age,
@@ -257,7 +266,7 @@ class ResultsPage extends Component {
 
               <SuccessGauge
                 assumptions={this.props.results.assumptions}
-                dataResults={this.props.results.plan}
+                dataResults={this.props.results.recommendedPlan}
                 retirementGoal={this.props.results.retirementGoal}
                 id="success-gauge2id"
                 targetSvg='success-gauge2'/>
@@ -279,8 +288,8 @@ class ResultsPage extends Component {
 
               </Paper>
             </Grid>
-
-{this.renderTable(dataResults)}
+{/* uncomment renderTable to view data in a table */}
+{/*this.renderTable(dataResults)*/}
           </Grid>
         )
 
@@ -320,7 +329,7 @@ class ResultsPage extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchResults }, dispatch);
+  return bindActionCreators({ fetchResults, getCalculations }, dispatch);
 }
 
 function mapStateToProps(state) {

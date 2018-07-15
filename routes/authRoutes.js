@@ -17,7 +17,13 @@ module.exports = app => {
       res.redirect('/');
     }
   );
-
+  app.get('/api/current_user', (req, res) => {
+    console.log(req.user)
+    User.findOne({ _id: req.user }).then(existingUser => {
+      console.log(existingUser)
+      res.send(existingUser)
+    })
+  })
   app.get('/api/logout', (req, res) => {
     req.logout()
     res.redirect('/');

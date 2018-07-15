@@ -1,5 +1,5 @@
 
-import { SET_ASSUMPTIONS, SET_GROWTH_ASSUMPTIONS, SET_CURRENT_STATUS, SET_PENSIONS, SET_RENTALS, RESULTS_ID } from "../actions/types";
+import { SET_ASSUMPTIONS, SET_GROWTH_ASSUMPTIONS, SET_CURRENT_STATUS, SET_PENSIONS, SET_RENTALS, RESULTS_ID, GET_CALCULATIONS } from "../actions/types";
 import { calculateFinancials, calRetirementGoal, calcNeededInitialContribution } from '../utils'
 
 export default function(state = {}, action) {
@@ -47,13 +47,13 @@ export default function(state = {}, action) {
           const calculations = calculateFinancials(newState, contributions)
           const retirementGoal = calRetirementGoal(calculations, state)
           const neededInitialContribution = calcNeededInitialContribution(retirementGoal, state)
-          const planCalculations = calculateFinancials(newState, neededInitialContribution)
+          const recommendedPlan = calculateFinancials(newState, neededInitialContribution)
 
-          newState.data = calculations
+          newState.currentPlan = calculations
 
           newState.retirementGoal = retirementGoal
 
-          newState.plan = planCalculations
+          newState.recommendedPlan = recommendedPlan
 
           console.log(localStorage.setItem(RESULTS_ID, JSON.stringify(newState)))
 
@@ -61,6 +61,9 @@ export default function(state = {}, action) {
 
           return newState
 
+        case GET_CALCULATIONS:
+
+          return action.payload.data
 
       default:
         return state;
