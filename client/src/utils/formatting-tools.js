@@ -13,7 +13,12 @@ export const toRatePercentage = (value) => {
     let splitByDecimalValue = formattedValue.split('.')
     splitByDecimalValue[0] = splitByDecimalValue[0].slice(0,3)
     splitByDecimalValue[1] = splitByDecimalValue[1].slice(0,3)
-    return splitByDecimalValue.join('.')
+    if (splitByDecimalValue[1]) {
+      return splitByDecimalValue.join('.')
+    } else {
+      return splitByDecimalValue[0]
+    }
+
   } else {
     return formattedValue
   }

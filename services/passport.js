@@ -7,11 +7,17 @@ require("../models/User");
 const User = mongoose.model('users')
 
 passport.serializeUser((user, done) => {
+      console.log('=========')
+      console.log('SERIALIZED HIT')
+      console.log('=========')
     console.log(user)
     done(null, user.id)
 })
 
 passport.deserializeUser((id, done) => {
+      console.log('=========')
+      console.log('DESERIALIZED HIT')
+      console.log('=========')
     console.log(id)
     done(null, id)
 })
@@ -27,6 +33,10 @@ passport.use(
           console.log(accessToken)
           console.log(profile)
         User.findOne({ googleId: profile.id }).then(existingUser => {
+          console.log('=========')
+          console.log('EXISTING USER HIT')
+          console.log('=========')
+          console.log(existingUser)
           if (existingUser) {
               console.log(existingUser)
             // we already have a record with the given profile ID

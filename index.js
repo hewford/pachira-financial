@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require('path');
 require('./services/passport')
+console.log('loaded')
 
 mongoose.connect(keys.mongoURI)
 

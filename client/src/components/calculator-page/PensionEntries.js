@@ -20,6 +20,7 @@ import { toRatePercentage } from '../../utils/formatting-tools'
 class PensionEntries extends Component {
 
   constructor(props){
+
     super(props)
     this.state={
       pensionEntries: 1,
@@ -88,12 +89,11 @@ class PensionEntries extends Component {
 
 
   render(){
-
+    let self = this
     // initialize message from snackbox that renders at the bottom on the screen when helper is clicked.
     const snackerMessage = 'COLA is the cost of living adjustment in which a pensions payout increases each year after you start collecting'
 
     let pensionEntries = [];
-
     for (let i=1; i<this.state.pensionEntries+1; i++) {
       let pensionIndex = 'pension'+i
 
@@ -104,7 +104,7 @@ class PensionEntries extends Component {
           <Typography className='flex' variant="title" color="inherit">
             Pension #{i}
           </Typography>
-          {this.state.pensionEntries>1 && i===this.state.pensionEntries ?
+          {self.state.pensionEntries>1 && i===self.state.pensionEntries ?
             <Button className="right" color="inherit"
               onClick={(e)=>{
                 e.preventDefault()
@@ -119,7 +119,7 @@ class PensionEntries extends Component {
 
         </Toolbar>
           <TextField
-            value={this.state[pensionIndex].pensionStart}
+            value={self.state[pensionIndex].pensionStart}
             color="secondary"
             id="textarea"
             label="Age Pension Starts"
@@ -138,7 +138,7 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={((this.state[pensionIndex].cola))}
+            value={((self.state[pensionIndex].cola))}
             color="secondary"
             id="textarea"
             label="COLA"
@@ -147,6 +147,7 @@ class PensionEntries extends Component {
             onChange={(e)=>{
               e.preventDefault()
               let value = toRatePercentage(e.target.value)
+              debugger;
               this.setState({[pensionIndex]:{
                   pensionStart: this.state[pensionIndex].pensionStart,
                   cola: Number(value),
@@ -156,7 +157,7 @@ class PensionEntries extends Component {
             }}
           />
           <TextField
-            value={toDollarInterger(this.state.monthlyIncome)}
+            value={toDollarInterger((self.state[pensionIndex].monthlyIncome))}
 
             color="secondary"
             id="textarea"

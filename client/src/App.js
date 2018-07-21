@@ -26,7 +26,7 @@ class App extends Component {
         <Header/> {/* render header outside of router switch so that it's always visible */}
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/calculator" component={Calculator} />
+            <Route exact path="/calculator" component={Calculator} />
             <Route path="/results" component={ResultsPage} />
           </Switch>
       </MuiThemeProvider>
