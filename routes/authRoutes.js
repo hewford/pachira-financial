@@ -23,7 +23,7 @@ module.exports = app => {
   app.get('/api/current_user', (req, res) => {
     console.log(req.user)
     User.findOne({ _id: req.user }).exec((err, existingUser) => {
-      if(err){console.log('error')}
+      if(err){res.send('error')}
       console.log(existingUser)
       res.send(existingUser)
     })
@@ -31,5 +31,8 @@ module.exports = app => {
   app.get('/api/logout', (req, res) => {
     req.logout()
     res.redirect('/');
+  })
+  app.get('api/test2', (req, res) =>{
+    res.send('success')
   })
 }
