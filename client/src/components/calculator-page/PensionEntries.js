@@ -150,7 +150,7 @@ class PensionEntries extends Component {
               debugger;
               this.setState({[pensionIndex]:{
                   pensionStart: this.state[pensionIndex].pensionStart,
-                  cola: Number(value),
+                  cola: value,
                   monthlyIncome: this.state[pensionIndex].monthlyIncome
                 }
               })

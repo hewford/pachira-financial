@@ -1,18 +1,24 @@
 {
-  "name": "fin-plan-breeze",
+  "name": "pachira-financial",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "engines": {
+    "node": "8.1.1",
+    "npm": "5.0.3"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "concurrently": "^3.6.0",
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.4",
@@ -24,9 +30,5 @@
     "passport-google-oauth20": "^1.0.0",
     "path": "^0.12.7",
     "path-parser": "^4.2.0"
-  },
-  "engines": {
-    "node": "8.1.1",
-    "npm": "5.0.3"
   }
 }
