@@ -7,6 +7,11 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require('path');
 
+// https://blog.risingstack.com/node-js-logging-tutorial
+// const debug = require('debug')('pachira-financial')
+// const name = 'pachira-financial-app'
+// debug('booting %s', name)
+
 require('./services/passport')
 console.log('loaded')
 
@@ -17,8 +22,18 @@ console.log('=========')
 mongoose.connect(keys.mongoURI)
 
 const app = express()
+
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Express will serve up production assets
+    // like our main.js file, or main.css file!
+    app.use(express.static('client/build'));
+  
+    // Express will serve up the index.html file
+    // if it doesn't recognize the route
+    const path = require('path');
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
   }
 
   app.use(cors());
@@ -36,18 +51,7 @@ if (process.env.NODE_ENV === 'production') {
 require('./routes/authRoutes')(app)
 require('./routes/planRoutes')(app)
 
-// if (process.env.NODE_ENV === 'production') {
-//     // Express will serve up production assets
-//     // like our main.js file, or main.css file!
-//     app.use(express.static('client/build'));
-  
-//     // Express will serve up the index.html file
-//     // if it doesn't recognize the route
-//     const path = require('path');
-//     app.get('*', (req, res) => {
-//       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-//     });
-//   }
+
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT);
