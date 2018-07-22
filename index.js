@@ -19,7 +19,7 @@ console.log('=========')
 console.log('INDEX.JS HIT')
 console.log('=========')
 
-mongoose.connect(keys.mongoURI)
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
 
 const app = express()
 
